@@ -5,21 +5,21 @@
 @tailwind utilities;
 
 * {
-    margin:0;
-    padding:0;
-    text-decoration: none;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  box-sizing: border-box;
 }
 
 body {
-    font-family: 'Inter', sans-serif;
-    background-color: #f8f8f8;
-    height: 100vh;
+  font-family: 'Inter', sans-serif;
+  background-color: #f8f8f8;
+  height: 100vh;
 }
 
 .app-container {
-    margin: auto;
-    // @apply p-1 md:px-4;
+  margin: auto;
+  // @apply p-1 md:px-4;
 }
 
 /* Chrome, Safari, Edge, Opera */
