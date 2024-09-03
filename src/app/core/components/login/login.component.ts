@@ -37,7 +37,7 @@ export class LoginComponent {
     const headers = new HttpHeaders({'Content-Type': 'application/json'});
     const body = {email, password};
 
-    this.http.post('http://localhost:8080/api/auth/login', body, {headers, responseType: 'text'})
+    this.http.post('/api/auth/login', body, {headers, responseType: 'text'})
       .pipe(
         tap(response => {
           alert('Login successful');

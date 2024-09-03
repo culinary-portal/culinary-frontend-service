@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {API_CONFIG} from "../../../config/api-conifg";
 
 @Component({
   selector: 'app-home',

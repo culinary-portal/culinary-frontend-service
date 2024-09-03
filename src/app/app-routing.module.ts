@@ -4,9 +4,9 @@ import {HomeComponent} from './core/components/home/home.component';
 import {LoginComponent} from './core/components/login/login.component';
 import {RegisterComponent} from './core/components/register/register.component';
 import {Page404Component} from './core/components/page404/page404.component';
-import {canActivate} from './shared/services/auth/authguard.service';
 import {SearchresultComponent} from './core/components/searchresult/searchresult.component';
 import {TimeOfTheDayComponent} from "./core/components/time-of-the-day/time-of-the-day.component";
+import {GeneralRecipeListComponent} from "./modules/generalrecipe/components/general-recipe-list.component";
 
 const routes: Routes = [
   {path: 'register', component: RegisterComponent},
@@ -14,13 +14,12 @@ const routes: Routes = [
   {path: '', component: HomeComponent},
   {
     path: 'login', component: LoginComponent,
-    // canActivate:[canActivate]
   },
+  {path: 'general-recipes', component: GeneralRecipeListComponent},
   {
-    path: 'register', component: RegisterComponent,
-    // canActivate:[canActivate]
-  },
-  {
+    path: 'general-recipes',
+    loadChildren: () => import('./modules/generalrecipe/generalrecipe.module').then(m => m.GeneralRecipeModule)
+  }, {
     path: 'time-of-the-day',
     component: TimeOfTheDayComponent
   },
