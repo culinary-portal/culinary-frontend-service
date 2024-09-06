@@ -9,26 +9,18 @@ import {TimeOfTheDayComponent} from "./core/components/time-of-the-day/time-of-t
 import {GeneralRecipeListComponent} from "./modules/generalrecipe/components/general-recipe-list.component";
 
 const routes: Routes = [
+  {path: '', component: HomeComponent, pathMatch: 'full'},
+  {path: 'home', component: HomeComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},
-  {path: '', component: HomeComponent},
-  {
-    path: 'login', component: LoginComponent,
-  },
   {path: 'general-recipes', component: GeneralRecipeListComponent},
+  {path: 'time-of-the-day', component: TimeOfTheDayComponent},
   {
     path: 'general-recipes',
     loadChildren: () => import('./modules/generalrecipe/generalrecipe.module').then(m => m.GeneralRecipeModule)
-  }, {
-    path: 'time-of-the-day',
-    component: TimeOfTheDayComponent
   },
-  {
-    path: 'products', component: SearchresultComponent
-  },
-
+  {path: 'products', component: SearchresultComponent},
   {path: '**', component: Page404Component, data: {message: 'Oops... This is a Bad request'}},
-
 ];
 
 @NgModule({

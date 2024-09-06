@@ -4,7 +4,7 @@ import {AuthService} from 'src/app/shared/services/auth/auth.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {catchError, of, tap} from 'rxjs';
 import {Router} from '@angular/router';
-
+import {MatSnackBar} from '@angular/material/snack-bar';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -18,7 +18,8 @@ export class LoginComponent {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private snackBar: MatSnackBar
   ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -49,9 +50,9 @@ export class LoginComponent {
         catchError(error => {
           console.error('Error:', error);
           if (error.status === 200) {
-            alert('Login successful (with parsing issue).');
+            this.snackBar.open('Login successful (with parsing issue).');
           } else {
-            alert('Wrong credentials! Please try again.');
+            this.snackBar.open('Wrong credentials! Please try again.');
           }
           return of(null);  // Return an observable to handle the error gracefully
         })
