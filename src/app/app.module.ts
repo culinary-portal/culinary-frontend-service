@@ -15,7 +15,12 @@ import { SearchComponent } from './core/layout/components/header/search/search.c
 import { AuthinterceptorService } from './shared/services/auth/authinterceptor.service';
 import { SharedModule } from './shared/shared.module';
 import { TimeOfTheDayComponent } from './core/components/time-of-the-day/time-of-the-day.component';
-import { MatSnackBarModule } from '@angular/material/snack-bar'; // Import MatSnackBarModule
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CustomAlertComponent } from './core/custom-alert/custom-alert.component';
+import { MatDialogModule } from '@angular/material/dialog';
+
+
 
 @NgModule({
   declarations: [
@@ -28,11 +33,14 @@ import { MatSnackBarModule } from '@angular/material/snack-bar'; // Import MatSn
     Page404Component,
     SearchresultComponent,
     SearchComponent,
-    TimeOfTheDayComponent
+    TimeOfTheDayComponent,
+    CustomAlertComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
+    MatDialogModule,
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,

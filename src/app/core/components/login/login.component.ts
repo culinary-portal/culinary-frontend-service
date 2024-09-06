@@ -4,7 +4,9 @@ import {AuthService} from 'src/app/shared/services/auth/auth.service';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {catchError, of, tap} from 'rxjs';
 import {Router} from '@angular/router';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import {AlertService} from "../../services/alert.service";
+
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -16,10 +18,9 @@ export class LoginComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthService,
     private http: HttpClient,
     private router: Router,
-    private snackBar: MatSnackBar
+    private alertService: AlertService
   ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -41,20 +42,15 @@ export class LoginComponent {
     this.http.post('/api/auth/login', body, {headers, responseType: 'text'})
       .pipe(
         tap(response => {
-          alert('Login successful');
-          console.log(response);
+          this.alertService.info('Login successful.');
           this.isLogin = true;
           this.loginForm.reset();
           this.router.navigate(['']).then(r => console.log('Navigated:', r));
         }),
         catchError(error => {
           console.error('Error:', error);
-          if (error.status === 200) {
-            this.snackBar.open('Login successful (with parsing issue).');
-          } else {
-            this.snackBar.open('Wrong credentials! Please try again.');
-          }
-          return of(null);  // Return an observable to handle the error gracefully
+          this.alertService.error('Invalid credentials! Please try again.');
+          return of(null);
         })
       )
       .subscribe();
