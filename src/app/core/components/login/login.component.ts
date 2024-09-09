@@ -1,9 +1,7 @@
-import {Component} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {AuthService} from 'src/app/shared/services/auth/auth.service';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {catchError, of, tap} from 'rxjs';
-import {Router} from '@angular/router';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import {AlertService} from "../../services/alert.service";
 
 
@@ -13,12 +11,11 @@ import {AlertService} from "../../services/alert.service";
   styles: []
 })
 export class LoginComponent {
-  isLogin = false;
   loginForm!: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
-    private http: HttpClient,
+    private authService: AuthService,
     private router: Router,
     private alertService: AlertService
   ) {
@@ -33,26 +30,17 @@ export class LoginComponent {
       return;
     }
 
-    const email = this.loginForm.value.email;
-    const password = this.loginForm.value.password;
+    const { email, password } = this.loginForm.value;
 
-    const headers = new HttpHeaders({'Content-Type': 'application/json'});
-    const body = {email, password};
-
-    this.http.post('/api/auth/login', body, {headers, responseType: 'text'})
-      .pipe(
-        tap(response => {
-          this.alertService.info('Login successful.');
-          this.isLogin = true;
-          this.loginForm.reset();
-          this.router.navigate(['']).then(r => console.log('Navigated:', r));
-        }),
-        catchError(error => {
-          console.error('Error:', error);
-          this.alertService.error('Invalid credentials! Please try again.');
-          return of(null);
-        })
-      )
-      .subscribe();
+    this.authService.login({ email, password }).subscribe({
+      next: (response) => {
+        this.alertService.info('Login successful.');
+        this.loginForm.reset();
+      },
+      error: (err) => {
+        console.error('Login failed', err);
+        this.alertService.error('Invalid credentials! Please try again.');
+      }
+    });
   }
 }
