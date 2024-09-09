@@ -1,31 +1,26 @@
-import {Injectable} from '@angular/core';
-import {Router} from '@angular/router';
-import {HttpClient, HttpResponse} from '@angular/common/http';
-import {map} from 'rxjs';
-
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { map, tap } from 'rxjs';
+import { UserDetailsDTO } from 'src/app/modules/user/model/user-details';
 
 interface AuthDTO {
   email: string;
   password: string;
 }
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  private userDetails: UserDetailsDTO | null = null;
 
-
-  constructor(private router: Router, private http: HttpClient) {
-  }
-
+  constructor(private http: HttpClient, private router: Router) {}
 
   register(authDTO: AuthDTO) {
-    return this.http.post('/api/auth/register', authDTO, {observe: 'response'}).pipe(
+    return this.http.post('/api/auth/register', authDTO, { observe: 'response' }).pipe(
       map((response: HttpResponse<any>) => {
-        // Ensure it treats 201 as a successful response
         if (response.status === 201) {
-          console.log('Registration successful');
           return response.body || {};
         } else {
           throw new Error('Unexpected response status: ' + response.status);
@@ -34,18 +29,44 @@ export class AuthService {
     );
   }
 
-
-  login() {
-    this.router.navigate(['/']);
-    localStorage.setItem('isLogged', 'true');
+  login(authDTO: AuthDTO) {
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post<UserDetailsDTO>('/api/auth/login', authDTO, { headers }).pipe(
+      tap((userDetails: UserDetailsDTO) => {
+        this.setUserDetails(userDetails); // Set user details
+        this.router.navigate(['/']);
+      })
+    );
   }
 
   logout() {
-    this.router.navigate(['/']);
-    localStorage.removeItem('isLogged');
+    this.clearUserDetails();
+    this.router.navigate(['/login']);
   }
 
   isLoggedIn() {
-    return localStorage.getItem('isLogged');
+    return !!localStorage.getItem('userDetails');
+  }
+
+  private setUserDetails(userDetails: UserDetailsDTO) {
+    this.userDetails = userDetails;
+    localStorage.setItem('userDetails', JSON.stringify(userDetails));
+    localStorage.setItem('isLogged', 'true');
+  }
+
+  private clearUserDetails() {
+    this.userDetails = null;
+    localStorage.removeItem('userDetails');
+    localStorage.removeItem('isLogged');
+  }
+
+  getUserDetails() {
+    if (!this.userDetails) {
+      const storedUser = localStorage.getItem('userDetails');
+      if (storedUser) {
+        this.userDetails = JSON.parse(storedUser);
+      }
+    }
+    return this.userDetails;
   }
 }

@@ -1,37 +1,49 @@
 <header class="mb-4">
   <nav class="px-2 md:px-6 lg:px-10 md:py-2">
     <div class="flex justify-between items-center pt-2 md:pt-0">
+      <!-- Logo Section -->
       <a class="flex flex-col items-center cursor-pointer" routerLink="/">
         <img alt="brand" class="w-[40px] md:w-[50px]" src="assets/images/logo.png"/>
         <span class="text-sm font-semibold text-white bg-[#d1521b] px-3 rounded rotate-6 hidden md:block">
-            Foodies
-          </span>
+          Foodies
+        </span>
       </a>
 
-      <div class="">
+      <div>
         <ul class="top-nav-menu">
-
           <li *ngIf="!authService.isLoggedIn()" class="top-nav-menu-item">
             <a [routerLink]="['/login']" class="py-1 flex-col md:flex-row">
               <i class="fa-regular fa-user" title="Login"></i>
               <span class="md:hidden text-xs">Login</span>
             </a>
           </li>
+
           <li *ngIf="authService.isLoggedIn()" class="top-nav-menu-item">
-            <button (click)="logOut()" class="py-1 flex-col md:flex-row">
-              <i class="fa-solid fa-arrow-right-from-bracket" title="Logout"></i>
-              <span class="text-xs">Logout</span>
-            </button>
+            <div class="flex items-center">
+              <img
+                [src]="(userDetails?.photoUrl && userDetails?.photoUrl !== 'N/A')
+                      ? userDetails?.photoUrl
+                      : 'assets/images/default-avatar.jpg'"
+                alt="Profile Picture"
+                class="w-8 h-8 rounded-full border-2 border-gray-300 mr-2"
+                title="Profile Picture"/>
+              <button (click)="logOut()" class="py-1 flex-col md:flex-row">
+                <i class="fa-solid fa-arrow-right-from-bracket" title="Logout"></i>
+                <span class="text-xs">Logout</span>
+              </button>
+            </div>
           </li>
         </ul>
       </div>
     </div>
+
     <div class="mt-6 border-b border-gray-300 hidden md:block">
       <ul class="bottom-nav-menu text-md uppercase">
         <li *ngFor="let menu of menuList" class="bottom-nav-menu-item">
           <a
             [attr.aria-label]="menu.title+' '+'link'"
             [routerLinkActive]="['active-link']"
+            [routerLinkActiveOptions]="{exact: true}"
             [routerLink]="[menu.path]"
             class="px-2 py-1 transition-all duration-900"
           >
@@ -41,6 +53,7 @@
       </ul>
     </div>
   </nav>
+
   <div class="flex justify-end items-center px-1 md:px-10 w-full">
     <div (click)="openMenu()" class="block md:hidden flex items-center gap-2 mr-2 cursor-pointer">
       <i class="fa-sharp fa-solid fa-bars text-md"></i>
@@ -68,8 +81,7 @@
       </div>
     </div>
 
-    <div
-      class="relative md:mb-4 w-full md:w-[300px] transition-all duration-300 bg-transparent focus-within:w-full border-2 focus-within:border-gray-600 rounded">
+    <div class="relative md:mb-4 w-full md:w-[300px] transition-all duration-300 bg-transparent focus-within:w-full border-2 focus-within:border-gray-600 rounded">
       <recipe-search></recipe-search>
     </div>
   </div>
@@ -90,6 +102,4 @@
       </ul>
     </div>
   </nav>
-
-
 </header>
