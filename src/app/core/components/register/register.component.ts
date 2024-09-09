@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import {Component} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {AuthService} from 'src/app/shared/services/auth/auth.service';
 import {AlertService} from "../../services/alert.service";
 
 @Component({
@@ -19,6 +19,7 @@ export class RegisterComponent {
     private alertService: AlertService
   ) {
     this.registerForm = this.formBuilder.group({
+      username: ['', [Validators.required, Validators.minLength(2)]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(2)]],
       repeatPassword: ['', Validators.required],
@@ -29,8 +30,8 @@ export class RegisterComponent {
   }
 
   passwordMatchValidator(formGroup: FormGroup) {
-    const { password, repeatPassword } = formGroup.controls;
-    return password.value === repeatPassword.value ? null : { mismatch: true };
+    const {password, repeatPassword} = formGroup.controls;
+    return password.value === repeatPassword.value ? null : {mismatch: true};
   }
 
   onSubmit() {
@@ -38,8 +39,8 @@ export class RegisterComponent {
       return;
     }
 
-    const { email, password } = this.registerForm.value;
-    this.authService.register({ email, password }).subscribe({
+    const {username, email, password} = this.registerForm.value;
+    this.authService.register({ username, email, password}).subscribe({
       next: () => {
         this.alertService.info('Registration successful!');
         this.router.navigate(['/login']);

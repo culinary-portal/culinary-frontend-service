@@ -9,6 +9,12 @@ interface AuthDTO {
   password: string;
 }
 
+interface RegisterDTO {
+  username: string;
+  email: string;
+  password: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -17,8 +23,8 @@ export class AuthService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  register(authDTO: AuthDTO) {
-    return this.http.post('/api/auth/register', authDTO, { observe: 'response' }).pipe(
+  register(registerDTO: RegisterDTO) {
+    return this.http.post('/api/auth/register', registerDTO, { observe: 'response' }).pipe(
       map((response: HttpResponse<any>) => {
         if (response.status === 201) {
           return response.body || {};

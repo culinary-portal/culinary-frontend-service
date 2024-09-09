@@ -4,6 +4,12 @@
     <form (ngSubmit)="onSubmit()" [formGroup]="registerForm">
       <div class="mb-6">
         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="email">Email</label>
+        <input class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 focus:border-2 dark:focus:border-gray-500 dark:shadow-sm-light" formControlName="username" id="username"
+               placeholder="Username"
+               required type="username">
+      </div>
+      <div class="mb-6">
+        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="email">Email</label>
         <input class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 focus:border-2 dark:focus:border-gray-500 dark:shadow-sm-light" formControlName="email" id="email"
                placeholder="Email"
                required type="email">
