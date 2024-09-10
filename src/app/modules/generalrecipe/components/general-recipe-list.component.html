@@ -1,14 +1,86 @@
-<div *ngIf="isLoading">Loading...</div>
-<div *ngIf="error">{{ error }}</div>
-<div *ngIf="!isLoading && !error">
-  <section class="recipe-list w-full flex-1">
-    <article *ngFor="let recipe of generalRecipes" class="recipe-card mb-5 p-4 shadow-lg rounded-lg border border-gray-200">
-      <h3 class="text-xl font-bold mb-2">{{ recipe.name }}</h3>
-      <img [src]="recipe.photoUrl" alt="{{ recipe.name }}" class="w-full h-40 object-cover rounded-md mb-3">
-      <p class="text-gray-700 mb-2">{{ recipe.description }}</p>
-      <p class="text-sm text-gray-600">Meal Type: {{ recipe.mealType }}</p>
-      <p class="text-sm text-gray-600">Rating: {{ recipe.rating }}</p>
-      <p class="text-sm text-gray-600">Calories: {{ recipe.calories }}</p>
-    </article>
-  </section>
+<div class="container mx-auto mt-6">
+  <div class="flex justify-between">
+    <!-- Left Sidebar (Filter Section) -->
+    <div class="w-1/4 p-4 bg-gray-100 rounded shadow">
+      <h3 class="font-bold mb-4">Filters</h3>
+
+      <div class="mb-4">
+        <label class="block mb-2 font-semibold">Diet Type</label>
+        <div *ngFor="let diet of configDietTypes">
+          <input type="checkbox" [value]="diet" (change)="onDietFilterChange($event)" class="mr-2">
+          <label>{{ diet }}</label>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label class="block mb-2 font-semibold">Meal Type</label>
+        <select [(ngModel)]="selectedMealType" class="w-full p-2 border rounded">
+          <option *ngFor="let mealType of configMealTypes" [value]="mealType === 'All' ? '' : mealType">{{ mealType }}</option>
+        </select>
+      </div>
+
+      <div class="mb-4">
+        <label class="block mb-2 font-semibold">Calories</label>
+        <div class="flex">
+          <input type="number" placeholder="Min" class="border rounded p-2 mr-2 w-1/2" [(ngModel)]="minCalories">
+          <input type="number" placeholder="Max" class="border rounded p-2 w-1/2" [(ngModel)]="maxCalories">
+        </div>
+        <button class="mt-2 p-2 bg-blue-500 text-white rounded" (click)="onFilterByCalories()">
+          Apply
+        </button>
+      </div>
+    </div>
+
+    <!-- Recipe List -->
+    <div class="w-2/4 p-4">
+      <h2 class="text-xl font-bold mb-4">Recipe List</h2>
+
+      <!-- List of Recipes -->
+      <div *ngIf="isLoading" class="text-center">
+        Loading recipes...
+      </div>
+      <div *ngIf="error" class="text-center text-red-500">
+        {{ error }}
+      </div>
+      <ul *ngIf="!isLoading && !error">
+        <li *ngFor="let recipe of generalRecipes" class="mb-4 p-4 bg-white rounded shadow">
+          <h3 class="font-bold">{{ recipe.name }}</h3>
+          <img [src]="recipe.photoUrl" alt="{{ recipe.name }}" class="w-full h-40 object-cover rounded-md mb-3">
+
+          <p>Calories: {{ recipe.calories }}</p>
+          <p>Protein: {{ recipe.protein }}g</p>
+          <p>⭐️: {{ recipe.rating }}</p>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Right Sidebar (Sorting Section) -->
+    <div class="w-1/4 p-4 bg-gray-100 rounded shadow">
+      <h3 class="font-semibold mb-4">Sort by</h3>
+
+      <label class="block mb-2 font-semibold">Calories</label>
+      <button class="block w-full text-left p-2 bg-gray-200 mb-2" (click)="sortRecipes('caloriesIncrease')">
+        Calories - Low to High
+      </button>
+      <button class="block w-full text-left p-2 bg-gray-200 mb-2" (click)="sortRecipes('caloriesDecrease')">
+        Calories - High to Low
+      </button>
+
+      <label class="block mb-2 font-semibold">Protein</label>
+      <button class="block w-full text-left p-2 bg-gray-200 mb-2" (click)="sortRecipes('proteinIncrease')">
+        Protein - Low to High
+      </button>
+      <button class="block w-full text-left p-2 bg-gray-200 mb-2" (click)="sortRecipes('proteinDecrease')">
+        Protein - High to Low
+      </button>
+
+      <label class="block mb-2 font-semibold">Ranking</label>
+      <button class="block w-full text-left p-2 bg-gray-200 mb-2" (click)="sortRecipes('rankingIncrease')">
+        Ranking - Low to High
+      </button>
+      <button class="block w-full text-left p-2 bg-gray-200 mb-2" (click)="sortRecipes('rankingDecrease')">
+        Ranking - High to Low
+      </button>
+    </div>
+  </div>
 </div>
