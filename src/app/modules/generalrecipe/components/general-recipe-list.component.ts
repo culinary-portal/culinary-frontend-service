@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {GeneralRecipeService} from '../services/general-recipe.service';
 import {GeneralRecipeDetails} from '../model/general-recipe-details';
-import {loadJsonConfig} from '../../../shared/helper/loadConfigJson'; // Import the utility
+import {loadJsonConfig} from '../../../shared/helper/loadConfigJson';
 
 
 @Component({
