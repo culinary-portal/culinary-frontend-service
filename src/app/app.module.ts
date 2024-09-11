@@ -19,6 +19,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CustomAlertComponent } from './core/custom-alert/custom-alert.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import {NgOptimizedImage} from "@angular/common";
 
 
 
@@ -36,17 +37,18 @@ import { MatDialogModule } from '@angular/material/dialog';
     TimeOfTheDayComponent,
     CustomAlertComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    MatDialogModule,
-    FormsModule,
-    ReactiveFormsModule,
-    AppRoutingModule,
-    SharedModule,
-    MatSnackBarModule
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        MatDialogModule,
+        FormsModule,
+        ReactiveFormsModule,
+        AppRoutingModule,
+        SharedModule,
+        MatSnackBarModule,
+        NgOptimizedImage
+    ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

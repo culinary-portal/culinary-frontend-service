@@ -13,8 +13,9 @@ const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'general-recipes', component: GeneralRecipeListComponent},
   {path: 'time-of-the-day', component: TimeOfTheDayComponent},
+  {path: 'general-recipes/:mealType', component: GeneralRecipeListComponent, pathMatch: 'full'},
+  {path: 'general-recipes', component: GeneralRecipeListComponent},
   {
     path: 'general-recipes',
     loadChildren: () => import('./modules/generalrecipe/generalrecipe.module').then(m => m.GeneralRecipeModule)
