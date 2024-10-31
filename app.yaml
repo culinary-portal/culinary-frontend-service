@@ -1,14 +1,12 @@
 runtime: custom
 env: flex
+service: culinary-frontend-service
 
 instance_class: F1
 
 automatic_scaling:
   min_num_instances: 1
   max_num_instances: 2
-
-env_variables:
-  SPRING_PROFILES_ACTIVE: "cloud"
 
 resources:
   cpu: 1
