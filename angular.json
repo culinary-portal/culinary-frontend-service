@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ecommerce": {
+    "culinary-frontend-service": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ecommerce",
+            "outputPath": "dist/culinary-frontend-service",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -35,7 +35,7 @@
             "scripts": []
           },
           "configurations": {
-            "production": {
+            "cloud": {
               "budgets": [
                 {
                   "type": "initial",
@@ -57,9 +57,17 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
+            },
+            "cloud": {
+              "buildOptimizer": false,
+              "optimization": true,
+              "vendorChunk": false,
+              "extractLicenses": true,
+              "sourceMap": false,
+              "namedChunks": false
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "cloud"
         },
         "serve": {
           "options": {
@@ -67,11 +75,17 @@
           },
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
-            "production": {
-              "browserTarget": "ecommerce:build:production"
+            "cloud": {
+              "browserTarget": "culinary-frontend-service:build:cloud",
+              "proxyConfig": "proxy.conf.cloud.json"
             },
             "development": {
-              "browserTarget": "ecommerce:build:development"
+              "browserTarget": "culinary-frontend-service:build:development",
+              "proxyConfig": "proxy.conf.json"
+            },
+            "cloud": {
+              "browserTarget": "culinary-frontend-service:build:cloud",
+              "proxyConfig": "proxy.conf.cloud.json"
             }
           },
           "defaultConfiguration": "development"
@@ -79,7 +93,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ecommerce:build"
+            "browserTarget": "culinary-frontend-service:build"
           }
         },
         "test": {
