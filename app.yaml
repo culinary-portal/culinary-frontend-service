@@ -8,9 +8,19 @@ endpoints_api_service:
 
 instance_class: F1
 
+env_variables:
+  DISABLE_METRICS_COLLECTION: "true"
+
 automatic_scaling:
   min_num_instances: 1
   max_num_instances: 2
+
+health_check:
+  enable_health_check: true
+  check_interval_sec: 30
+  timeout_sec: 4
+  unhealthy_threshold: 2
+  healthy_threshold: 2
 
 resources:
   cpu: 1
