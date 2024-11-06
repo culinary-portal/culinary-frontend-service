@@ -13,7 +13,6 @@ export class AuthLoggingInterceptorService implements HttpInterceptor {
 
     const started = Date.now();
 
-    // Construct the full URL, including the base URL if req.urlWithParams is relative
     const fullUrl = req.url.startsWith('http')
       ? req.url
       : `${req.urlWithParams}`;

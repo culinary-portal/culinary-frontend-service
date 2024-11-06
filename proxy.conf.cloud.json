@@ -1,8 +1,0 @@
-{
-  "/api/**": {
-    "target": "https://culinary-user-service-dot-culinary-portal.lm.r.appspot.com/",
-    "secure": true,
-    "changeOrigin": true,
-    "logLevel": "debug"
-  }
-}

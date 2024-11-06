@@ -21,12 +21,13 @@ export class LoginComponent {
   ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(16)]]
+      password: ['', [Validators.required]]
     });
   }
 
   onSubmit() {
     if (this.loginForm.invalid) {
+      this.alertService.error('Please fill out the form correctly.');
       return;
     }
 
