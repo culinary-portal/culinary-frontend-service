@@ -12,7 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Page404Component } from './core/components/page404/page404.component';
 import { SearchresultComponent } from './core/components/searchresult/searchresult.component';
 import { SearchComponent } from './core/layout/components/header/search/search.component';
-import { AuthinterceptorService } from './shared/services/auth/authinterceptor.service';
+import { AuthLoggingInterceptorService } from './shared/services/auth/authinterceptor.service';
 import { SharedModule } from './shared/shared.module';
 import { TimeOfTheDayComponent } from './core/components/time-of-the-day/time-of-the-day.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -52,7 +52,7 @@ import {NgOptimizedImage} from "@angular/common";
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: AuthinterceptorService,
+      useClass: AuthLoggingInterceptorService,
       multi: true
     }
   ],
