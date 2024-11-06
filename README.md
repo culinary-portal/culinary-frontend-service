@@ -6,9 +6,9 @@
 
 2. After installation node and angular cli, open command prompt, copy this command **`npm install -g @angular/cli`** and install it.
 
-3. Open VSCode Terminal with destination folder run the command **`ng new app_name`** and wait, after created the app copy all files of this app and paste it in your created app run command **`npm install --legacy-peer-deps`**.
+3. Run command **`npm install --legacy-peer-deps`**.
 
-4. After the installation of all dependencies and environment setup. Now, you have to run last command **`npm run start:development or ng serve --configuration development `**.
+4. After the installation of all dependencies and environmentLocal setup. Now, you have to run last command **`npm run start:development or ng serve --configuration development `**.
 
 5. Now your app will start successfully.
 
@@ -29,14 +29,6 @@ Run `ng generate component component-name` to generate a new component. You can 
 ## Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
 ## Further help
 
