@@ -39,7 +39,7 @@ import { UserDetailsDTO } from 'src/app/modules/user/model/user-details';
 export class HeaderComponent implements OnInit {
   menuList: { title: string; path: string }[] = MENU;
   isMenu = false;
-  userDetails: UserDetailsDTO | null = null;  // Store user details
+  userDetails: UserDetailsDTO | null = null;
 
   constructor(public authService: AuthService) {}
 

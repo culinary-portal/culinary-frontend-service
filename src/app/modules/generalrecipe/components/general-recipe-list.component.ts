@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {GeneralRecipeService} from '../services/general-recipe.service';
 import {GeneralRecipeDetails} from '../model/general-recipe-details';
-import {loadJsonConfig} from '../../../shared/helper/loadConfigJson'; // Import the utility
+import {loadJsonConfig} from '../../../shared/helper/loadConfigJson';
+import {ActivatedRoute, Router} from "@angular/router";
 
 
 @Component({
@@ -20,13 +21,23 @@ export class GeneralRecipeListComponent implements OnInit {
   configMealTypes: string[] = [];
   selectedMealType: string | null = null;
 
-  constructor(private generalRecipeService: GeneralRecipeService) {
-  }
+  constructor(
+    private generalRecipeService: GeneralRecipeService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.loadDietConfig();
-    this.fetchRecipes();
-    this.loadMealConfig()
+    this.route.paramMap.subscribe(params => {
+      this.selectedMealType = params.get('mealType');
+      this.fetchRecipes(); // Fetch recipes based on the selected meal type
+    });
+    this.loadMealConfig();
+  }
+
+  onMealTypeChange(): void {
+    this.router.navigate(['/general-recipes/', this.selectedMealType || '']);
   }
 
   loadDietConfig(): void {

@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { GeneralRecipeDetails } from '../model/general-recipe-details';
+import {environment} from "../../../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class GeneralRecipeService {
-  private apiUrl = '/api/general-recipes';
+  private apiUrl = `${environment.apiUrl}/api/general-recipes`;
 
   constructor(private http: HttpClient) {}
 

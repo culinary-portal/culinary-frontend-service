@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { map, tap } from 'rxjs';
 import { UserDetailsDTO } from 'src/app/modules/user/model/user-details';
+import {environment} from "../../../../environments/environment";
 
 interface AuthDTO {
   email: string;
@@ -20,11 +21,11 @@ interface RegisterDTO {
 })
 export class AuthService {
   private userDetails: UserDetailsDTO | null = null;
-
+  private baseApiUrl = environment.apiUrl;
   constructor(private http: HttpClient, private router: Router) {}
 
   register(registerDTO: RegisterDTO) {
-    return this.http.post('/api/auth/register', registerDTO, { observe: 'response' }).pipe(
+    return this.http.post(`${this.baseApiUrl}/api/auth/register`, registerDTO, { observe: 'response' }).pipe(
       map((response: HttpResponse<any>) => {
         if (response.status === 201) {
           return response.body || {};
@@ -37,9 +38,9 @@ export class AuthService {
 
   login(authDTO: AuthDTO) {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.http.post<UserDetailsDTO>('/api/auth/login', authDTO, { headers }).pipe(
+    return this.http.post<UserDetailsDTO>(`${this.baseApiUrl}/api/auth/login`, authDTO, { headers }).pipe(
       tap((userDetails: UserDetailsDTO) => {
-        this.setUserDetails(userDetails); // Set user details
+        this.setUserDetails(userDetails);
         this.router.navigate(['/']);
       })
     );

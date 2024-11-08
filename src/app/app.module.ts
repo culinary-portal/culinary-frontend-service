@@ -12,13 +12,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Page404Component } from './core/components/page404/page404.component';
 import { SearchresultComponent } from './core/components/searchresult/searchresult.component';
 import { SearchComponent } from './core/layout/components/header/search/search.component';
-import { AuthinterceptorService } from './shared/services/auth/authinterceptor.service';
+import { AuthLoggingInterceptorService } from './shared/services/auth/authinterceptor.service';
 import { SharedModule } from './shared/shared.module';
 import { TimeOfTheDayComponent } from './core/components/time-of-the-day/time-of-the-day.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CustomAlertComponent } from './core/custom-alert/custom-alert.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import {NgOptimizedImage} from "@angular/common";
 
 
 
@@ -36,21 +37,22 @@ import { MatDialogModule } from '@angular/material/dialog';
     TimeOfTheDayComponent,
     CustomAlertComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    MatDialogModule,
-    FormsModule,
-    ReactiveFormsModule,
-    AppRoutingModule,
-    SharedModule,
-    MatSnackBarModule
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        MatDialogModule,
+        FormsModule,
+        ReactiveFormsModule,
+        AppRoutingModule,
+        SharedModule,
+        MatSnackBarModule,
+        NgOptimizedImage
+    ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
-      useClass: AuthinterceptorService,
+      useClass: AuthLoggingInterceptorService,
       multi: true
     }
   ],

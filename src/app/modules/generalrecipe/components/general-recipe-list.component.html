@@ -14,10 +14,11 @@
 
       <div class="mb-4">
         <label class="block mb-2 font-semibold">Meal Type</label>
-        <select [(ngModel)]="selectedMealType" class="w-full p-2 border rounded">
-          <option *ngFor="let mealType of configMealTypes" [value]="mealType === 'All' ? '' : mealType">{{ mealType }}</option>
+        <select [(ngModel)]="selectedMealType" class="w-full p-2 border rounded" (change)="onMealTypeChange()">
+          <option selected="All"*ngFor="let mealType of configMealTypes" [value]="mealType === 'All' ? '' : mealType">{{ mealType }}</option>
         </select>
       </div>
+
 
       <div class="mb-4">
         <label class="block mb-2 font-semibold">Calories</label>
