@@ -20,8 +20,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CustomAlertComponent } from './core/custom-alert/custom-alert.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import {NgOptimizedImage} from "@angular/common";
-
-
+import { RecipeComponent } from './modules/recipe/components/recipe.component';
+import { ProfileComponent } from './core/components/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +35,9 @@ import {NgOptimizedImage} from "@angular/common";
     SearchresultComponent,
     SearchComponent,
     TimeOfTheDayComponent,
-    CustomAlertComponent
+    CustomAlertComponent,
+    RecipeComponent,
+    ProfileComponent,
   ],
     imports: [
         BrowserModule,

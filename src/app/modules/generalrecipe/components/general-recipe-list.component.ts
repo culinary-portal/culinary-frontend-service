@@ -118,4 +118,7 @@ export class GeneralRecipeListComponent implements OnInit {
         break;
     }
   }
+  viewRecipeDetails(id: number): void {
+    this.router.navigate(['/recipes', id]); // Navigates to the details screen
+  }
 }

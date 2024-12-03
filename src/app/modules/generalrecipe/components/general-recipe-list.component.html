@@ -45,7 +45,12 @@
       </div>
       <ul *ngIf="!isLoading && !error">
         <li *ngFor="let recipe of generalRecipes" class="mb-4 p-4 bg-white rounded shadow">
-          <h3 class="font-bold">{{ recipe.name }}</h3>
+          <h3
+            class="font-bold text-blue-500 hover:underline cursor-pointer"
+            (click)="viewRecipeDetails(recipe.generalRecipeId)"
+          >
+            {{ recipe.name }}
+          </h3>
           <img [src]="recipe.photoUrl" alt="{{ recipe.name }}" class="w-full h-40 object-cover rounded-md mb-3">
 
           <p>Calories: {{ recipe.calories }}</p>
@@ -83,5 +88,9 @@
         Ranking - High to Low
       </button>
     </div>
+    <div *ngIf="isLoading">Loading recipes...</div>
+    <div *ngIf="error" class="error">{{ error }}</div>
+
+
   </div>
 </div>
