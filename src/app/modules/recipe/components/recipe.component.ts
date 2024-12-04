@@ -153,23 +153,7 @@ export class RecipeComponent implements OnInit {
       },
     });
   }
-
-  /*loadFavoriteRecipes(): void {
-    if (this.userId === null) {
-      console.warn('User ID is not available. Cannot load favorite recipes.');
-      return;
-    }
-
-    this.userPreferencesService.getFavoriteRecipes(this.userId).subscribe({
-      next: (favorites) => {
-        this.favoriteRecipes = favorites;
-      },
-      error: (err) => {
-        console.error('Error loading favorite recipes:', err);
-        this.errorMessage = 'Failed to load favorite recipes. Please try again later.';
-      },
-    });
-  }*/
-
 }
+
+
 
