@@ -1,0 +1,30 @@
+<div class="profile-container">
+  <!-- Profile Sidebar -->
+  <div class="profile-sidebar">
+    <h1>My profile</h1>
+    <div class="profile-image">
+      <img [src]="userDetails?.photoUrl" alt="Profile Image" />
+    </div>
+    <p class="profile-name">{{ userDetails?.userName}}</p>
+  </div>
+
+  <!-- Favorites Section -->
+  <div class="favorites-section">
+    <h1>Favourite Recipes</h1>
+    <div class="recipe-list">
+      <!-- Loop through favorite recipes -->
+      <div class="recipe-card" *ngFor="let recipe of favoriteRecipes">
+        <img [src]="recipe.imageUrl" alt="Recipe Image" class="recipe-image" />
+        <div class="recipe-info">
+          <h2>{{ recipe.name }}</h2>
+          <p>{{ recipe.ingredients }}</p>
+        </div>
+        <div class="recipe-rating">
+          <span class="star-icon">⭐</span>
+          <span class="rating-value">{{ recipe.rating }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

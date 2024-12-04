@@ -1,0 +1,88 @@
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #fbead2;
+  color: #333;
+}
+
+h2 {
+  font-size: 1.8rem;
+  color: #ff7600;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+/* Profile Section */
+.profile-section {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.profile-picture {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+/* Recipes Section */
+.favorite-recipes-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 20px;
+}
+
+.recipes-section {
+  flex: 1;
+  margin-left: 40px;
+}
+
+.recipe-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.recipe-item {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  background-color: #fff7e0;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.recipe-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.recipe-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.recipe-info h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.recipe-info p {
+  margin: 5px 0;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.rating {
+  margin-top: 5px;
+  font-size: 0.9rem;
+  color: #ff7600;
+}

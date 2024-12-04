@@ -1,0 +1,78 @@
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #fbead2;
+  color: #333;
+}
+
+h2 {
+  font-size: 1.8rem;
+  color: #ff7600;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+/* Profile Section */
+.profile-section {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.profile-picture {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+/* Diets Section */
+.favorite-diets-container {
+  text-align: center;
+}
+
+.diets-section {
+  margin-top: 20px;
+}
+
+.diet-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.diet-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.diet-item input[type='checkbox'] {
+  margin-right: 10px;
+}
+
+.action-buttons {
+  margin-top: 20px;
+}
+
+.accept-button,
+.reject-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.accept-button {
+  background-color: #4caf50;
+  color: white;
+  margin-right: 10px;
+}
+
+.reject-button {
+  background-color: #f44336;
+  color: white;
+}

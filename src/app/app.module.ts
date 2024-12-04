@@ -22,6 +22,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import {NgOptimizedImage} from "@angular/common";
 import { RecipeComponent } from './modules/recipe/components/recipe.component';
 import { ProfileComponent } from './core/components/profile/profile.component';
+import { UserFavRecipesComponent } from './modules/user_preferences/user-fav-recipes/user-fav-recipes.component';
+import { UserFavDietsComponent } from './modules/user_preferences/user-fav-diets/user-fav-diets.component';
 
 @NgModule({
   declarations: [
@@ -38,19 +40,21 @@ import { ProfileComponent } from './core/components/profile/profile.component';
     CustomAlertComponent,
     RecipeComponent,
     ProfileComponent,
+    UserFavRecipesComponent,
+    UserFavDietsComponent
   ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        MatDialogModule,
-        FormsModule,
-        ReactiveFormsModule,
-        AppRoutingModule,
-        SharedModule,
-        MatSnackBarModule,
-        NgOptimizedImage
-    ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    MatDialogModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AppRoutingModule,
+    SharedModule,
+    MatSnackBarModule,
+    NgOptimizedImage,
+  ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

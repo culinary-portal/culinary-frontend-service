@@ -1,0 +1,36 @@
+<div *ngIf="isLoading" class="loading">Loading...</div>
+<div *ngIf="error" class="error">{{ error }}</div>
+
+<div *ngIf="!isLoading && user">
+  <div class="profile-header">
+    <img [src]="user.photoUrl" alt="User Photo" />
+    <h1>{{ user.userName }}</h1>
+    <p>Email: {{ user.email }}</p>
+    <p>Birthdate: {{ user.birthdate | date }}</p>
+  </div>
+
+  <div class="specifics">
+    <h2>Specific Details</h2>
+    <!--<ul>-->
+     <!-- <li *ngFor="let specific of user.specifics">
+        {{ specific.name }}: {{ specific.value }}
+        <button (click)="deleteSpecific(specific.specificId)">Remove</button>
+      </li>
+    </ul>
+    <button (click)="addSpecific()">Add Specific</button>-->
+  </div>
+
+  <div class="profile-options">
+    <div
+      class="option-card"
+      *ngFor="let option of options"
+      [routerLink]="option.route"
+      style="cursor: pointer;"
+    >
+      <i class="{{ option.icon }}"></i>
+      <p>{{ option.label }}</p>
+    </div>
+  </div>
+
+</div>
+

@@ -1,0 +1,64 @@
+.profile {
+  text-align: center;
+  .profile-pic {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+  }
+}
+
+.options-container {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.profile-options {
+  display: flex; /* Enable horizontal layout */
+  flex-direction: row; /* Align items in a row */
+  gap: 20px; /* Add horizontal spacing between cards */
+  justify-content: center; /* Center the cards horizontally */
+  align-items: center; /* Align items vertically */
+  margin-top: 20px; /* Add spacing above the options container */
+}
+
+.option-card {
+  display: flex;
+  flex-direction: column; /* Align icon and text horizontally */
+  justify-content: flex-start;
+  align-items: center;
+  width: 120px; /* Adjust the width for horizontal layout */
+  height: 120px; /* Adjust the height */
+  background-color: #e89a50; /* Orange background */
+  color: white;
+  border-radius: 20px;
+  cursor: pointer;
+  padding: 10px; /* Add padding for better spacing inside the card */
+  transition: background-color 0.3s, transform 0.2s;
+
+  margin: 20px; /* Additional margin for more spacing */
+
+  i {
+    font-size: 30px; /* Icon size */
+    margin-right: 15px; /* Add space between icon and text */
+  }
+
+  &:hover {
+    background-color: #d8823a; /* Darker orange on hover */
+    transform: scale(1.05);
+  }
+
+  &.disabled {
+    background-color: gray;
+    cursor: not-allowed;
+  }
+
+  p {
+    margin: 0;
+    font-size: 14px;
+    text-align: left; /* Align text to the left */
+  }
+}
