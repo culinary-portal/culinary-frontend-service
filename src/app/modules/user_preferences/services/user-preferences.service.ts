@@ -52,16 +52,18 @@ export class UserPreferencesService {
       .pipe(catchError(this.handleError));
   }
 
-  updateFavoriteDiets(preferencesUpdate: { userId: number; dietTypeIds: number[] }): Observable<any> {
-    return this.http
-      .post(`${this.baseUrl}/user/${preferencesUpdate.userId}/favorite-diets`, preferencesUpdate)
-      .pipe(catchError(this.handleError));
-  }
-
   // Handle errors
   private handleError(error: HttpErrorResponse): Observable<never> {
     console.error('An error occurred:', error.message);
     return throwError(() => new Error('Something went wrong, please try again later.'));
+  }
+
+  updateUser(userId: number, userData: any): Observable<any> {
+    return this.http.put(`${this.baseUrl}/user/${userId}`, userData);
+  }
+
+  getUserDetails(userId: number | undefined): Observable<UserDetailsDTO> {
+    return this.http.get<UserDetailsDTO>(`${this.baseUrl}/user/${userId}`);
   }
 }
 

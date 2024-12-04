@@ -1,0 +1,113 @@
+.settings-container {
+  font-family: 'Arial', sans-serif;
+  color: #333;
+  background-color: #ffe4c4;
+  padding: 20px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+.header h1 {
+  font-size: 28px;
+  color: #f47920;
+}
+
+.navigation a {
+  margin: 0 10px;
+  color: #333;
+  text-decoration: none;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+}
+
+.profile img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.settings-section {
+  margin-top: 20px;
+}
+
+.settings-section h2 {
+  font-size: 32px;
+  color: #f47920;
+  margin-bottom: 20px;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.user-info img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-right: 15px;
+}
+
+.settings-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.form-group {
+  flex: 1 1 calc(50% - 20px);
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group select {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.email-section {
+  margin-top: 20px;
+}
+
+.email-section button {
+  padding: 10px;
+  background-color: #f47920;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.form-actions {
+  text-align: right;
+  margin-top: 20px;
+}
+
+.save-button {
+  background-color: #f47920;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
