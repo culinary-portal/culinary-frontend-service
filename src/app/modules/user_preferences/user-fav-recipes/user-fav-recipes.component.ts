@@ -6,21 +6,20 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { RecipeService } from '../../recipe/services/recipe.service';
 import { GeneralRecipeDetails } from '../../generalrecipe/model/general-recipe-details';
 
+
 @Component({
   selector: 'app-user-preferences',
   templateUrl: './user-fav-recipes.component.html',
   styleUrls: ['./user-fav-recipes.component.scss'],
 })
+
 export class UserFavRecipesComponent implements OnInit {
-  favoriteRecipes: any[] = [];
-  favoriteDiets: any[] = [];
-  userDetails: UserDetailsDTO | null = null;
+  favoriteRecipes: GeneralRecipeDetails[] = [];
   userId: number | null = null;
-  generalRecipe: GeneralRecipeDetails | null = null;
+  user!: UserDetailsDTO;
 
   constructor(
     private userPreferencesService: UserPreferencesService,
-    private route: ActivatedRoute,
     private recipeService: RecipeService,
     private authService: AuthService,
     private router: Router
@@ -45,7 +44,7 @@ export class UserFavRecipesComponent implements OnInit {
 
     // Fetch favorite recipes
     this.userPreferencesService.getFavoriteRecipes(this.userId).subscribe({
-      next: (data: number[]) => {
+      next: (data: GeneralRecipeDetails[]) => {
         this.favoriteRecipes = data;
         console.log('Favorite Recipes Loaded:', this.favoriteRecipes);
       },
@@ -53,62 +52,58 @@ export class UserFavRecipesComponent implements OnInit {
     });
   }
 
-  addFavoriteDiet(dietId: number): void {
-    if (!this.userId) {
-      console.error('User ID is missing!');
-      alert('You must be logged in to add a favorite diet.');
+  fetchFavoriteRecipeDetails(recipeIds: number[]): void {
+    if (!recipeIds || recipeIds.length === 0) {
+      console.log('No favorite recipes found.');
+      this.favoriteRecipes = [];
       return;
     }
 
-    this.userPreferencesService.addFavoriteDiet(this.userId, dietId).subscribe({
-      next: () => {
-        console.log(`Diet ${dietId} added to favorites.`);
-        alert('Diet added to favorites successfully!');
-        this.loadPreferences(); // Reload preferences
-      },
-      error: (err) => {
-        console.error('Error adding favorite diet:', err);
-        alert('Failed to add diet to favorites. Please try again.');
-      },
-    });
-  }
-
-  addFavoriteRecipe(recipeId: number): void {
-    if (!this.userId) {
-      console.error('User ID is missing!');
-      return;
-    }
-
-    this.userPreferencesService.addFavoriteRecipe(this.userId, recipeId).subscribe({
-      next: () => {
-        console.log(`Recipe ${recipeId} added to favorites.`);
-        alert('Recipe added to favorites successfully!');
-        this.loadPreferences(); // Reload preferences
-      },
-      error: (err) => {
-        console.error('Error adding favorite recipe:', err);
-        alert('Failed to add recipe to favorites. Please try again.');
-      },
+    // Fetch full details for each recipe ID
+    const recipeDetails: GeneralRecipeDetails[] = [];
+    recipeIds.forEach((id) => {
+      this.recipeService.getGeneralRecipeById(id).subscribe({
+        next: (recipe) => {
+          recipeDetails.push(recipe);
+          // Update the list when all recipes are fetched
+          if (recipeDetails.length === recipeIds.length) {
+            this.favoriteRecipes = recipeDetails;
+          }
+        },
+        error: (err) => console.error(`Error fetching recipe details for ID ${id}:`, err),
+      });
     });
   }
 
   removeFavoriteRecipe(recipeId: number): void {
-    if (!this.userId) {
-      console.error('User ID is missing!');
-      return;
+    const confirmation = confirm('Are you sure you want to remove this recipe from your favorites?');
+    if (!confirmation) {
+      console.log('User canceled the recipe removal.');
+      return; // If the user cancels, do nothing
     }
 
-    this.userPreferencesService.removeFavoriteRecipe(this.userId, recipeId).subscribe({
+    console.log(`Attempting to remove recipe with ID ${recipeId} for user ID ${this.userId}...`);
+
+    this.userPreferencesService.removeFavoriteRecipe(this.userId!, recipeId).subscribe({
       next: () => {
-        console.log(`Recipe ${recipeId} removed from favorites.`);
-        alert('Recipe removed from favorites successfully!');
-        this.loadPreferences(); // Reload preferences
+        console.log(`Recipe with ID ${recipeId} removed successfully.`);
+        // Update the local favoriteRecipes array
+        this.favoriteRecipes = this.favoriteRecipes.filter(
+          (recipe) => recipe.generalRecipeId !== recipeId
+        );
+        // Notify the user of successful removal
+        alert(`The recipe has been successfully removed from your favorites.`);
       },
       error: (err) => {
-        console.error('Error removing favorite recipe:', err);
-        alert('Failed to remove recipe from favorites. Please try again.');
+        console.error(`Error removing recipe with ID ${recipeId}:`, err);
+        // Notify the user of the failure
+        alert(`Failed to remove the recipe. Please try again later.`);
       },
     });
+  }
+
+  viewRecipeDetails(id: number): void {
+    this.router.navigate(['/recipes', id]); // Navigates to the details screen
   }
 
 }

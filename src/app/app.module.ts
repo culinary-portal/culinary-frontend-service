@@ -24,6 +24,7 @@ import { RecipeComponent } from './modules/recipe/components/recipe.component';
 import { ProfileComponent } from './core/components/profile/profile.component';
 import { UserFavRecipesComponent } from './modules/user_preferences/user-fav-recipes/user-fav-recipes.component';
 import { UserFavDietsComponent } from './modules/user_preferences/user-fav-diets/user-fav-diets.component';
+import { SettingsComponent } from './modules/user_preferences/settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { UserFavDietsComponent } from './modules/user_preferences/user-fav-diets
     RecipeComponent,
     ProfileComponent,
     UserFavRecipesComponent,
-    UserFavDietsComponent
+    UserFavDietsComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,

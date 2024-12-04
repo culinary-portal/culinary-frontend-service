@@ -1,3 +1,4 @@
+<!--
 <div class="favorite-diets-container">
   <h2>Favorite Diets</h2>
   <ul class="diet-list">
@@ -7,7 +8,8 @@
         [id]="diet.dietTypeId"
         [checked]="isFavoriteDiet(diet.dietTypeId)"
         #checkbox
-        (change)="toggleDietSelection(diet.dietTypeId, checkbox.checked)"
+        (change)="addDiettofavourite(diet.dietTypeId, checkbox.checked)"
+        (change)="removeDiettofavourite(diet.dietTypeId, checkbox.checked)"
       />
       <label [for]="diet.dietTypeId">{{ diet.dietType }}</label>
     </li>
@@ -17,6 +19,35 @@
     <button class="reject-button" (click)="resetDietPreferences()">Reject</button>
   </div>
 </div>
+-->
+<div class="preferences-container">
+  <h1>Your Diet Preferences</h1>
+
+  <div *ngFor="let diet of availableDiets" class="diet-item">
+    <label>
+      <input
+        type="checkbox"
+        [checked]="selectedDiets.includes(diet.dietTypeId)"
+        (change)="savePreferences(diet.dietTypeId)"
+      />
+      {{ diet.dietType }}
+    </label>
+  </div>
+
+  <div class="actions">
+    <!--<button
+      [disabled]="isSaving"
+      (click)="savePreferences(diet)"
+      class="save-button"
+    >
+      {{ isSaving ? 'Saving...' : 'Save Preferences' }}
+    </button>-->
+    <button (click)="resetDietPreferences()" class="reset-button">
+      Reset Preferences
+    </button>
+  </div>
+</div>
+
 
 
 

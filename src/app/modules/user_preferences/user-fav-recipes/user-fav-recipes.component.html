@@ -1,30 +1,32 @@
-<div class="profile-container">
-  <!-- Profile Sidebar -->
-  <div class="profile-sidebar">
-    <h1>My profile</h1>
-    <div class="profile-image">
-      <img [src]="userDetails?.photoUrl" alt="Profile Image" />
-    </div>
-    <p class="profile-name">{{ userDetails?.userName}}</p>
+<div class="favorites-section">
+  <h2>Favourite Recipes</h2>
+
+  <!-- Display a message if there are no favorite recipes -->
+  <div *ngIf="favoriteRecipes.length === 0" class="no-recipes-message">
+    No favorite recipes added yet.
   </div>
 
-  <!-- Favorites Section -->
-  <div class="favorites-section">
-    <h1>Favourite Recipes</h1>
-    <div class="recipe-list">
-      <!-- Loop through favorite recipes -->
-      <div class="recipe-card" *ngFor="let recipe of favoriteRecipes">
-        <img [src]="recipe.imageUrl" alt="Recipe Image" class="recipe-image" />
-        <div class="recipe-info">
-          <h2>{{ recipe.name }}</h2>
-          <p>{{ recipe.ingredients }}</p>
-        </div>
-        <div class="recipe-rating">
-          <span class="star-icon">⭐</span>
-          <span class="rating-value">{{ recipe.rating }}</span>
-        </div>
-      </div>
+  <!-- Iterate through the favorite recipes -->
+  <div *ngFor="let recipe of favoriteRecipes" class="recipe-card">
+    <img
+      [src]="recipe.photoUrl || 'https://via.placeholder.com/100'"
+      alt="{{ recipe.name }}"
+      class="recipe-image"
+    />
+    <div class="recipe-info">
+      <h3>
+        <!-- Use either (click) or [routerLink], not both -->
+        <a (click)="viewRecipeDetails(recipe.generalRecipeId)" class="recipe-link">
+          {{ recipe.name }}
+        </a>
+      </h3>
     </div>
+    <div class="recipe-rating">
+      <span class="star">&#9733;</span>
+      <span>{{ recipe.rating }}</span>
+    </div>
+    <button class="remove-btn" (click)="removeFavoriteRecipe(recipe.generalRecipeId)">
+      Remove
+    </button>
   </div>
 </div>
-

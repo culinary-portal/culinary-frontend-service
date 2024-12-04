@@ -18,6 +18,13 @@
     <span>protein: {{ generalRecipe?.protein }} g</span>
     <span>fat: {{ generalRecipe?.fat }} g</span>
     <span>carbs: {{ generalRecipe?.carbohydrate }} g</span>
+    <button
+      class="like-button"
+      (click)="saveRecipe()"
+      title="Add to Favorites"
+    >
+      Like
+    </button>
   </div>
   </div>
 

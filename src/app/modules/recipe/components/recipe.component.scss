@@ -252,18 +252,24 @@ margin-top: 20px; /* Add space above */
   background-color: #e68a00; /* Darker orange on hover */
 }
 
-.like-icon {
+.like-button {
+  padding: 10px 20px;
+  font-size: 16px;
   cursor: pointer;
-  font-size: 24px;
-  color: gray;
-  transition: color 0.3s ease;
+  border: none;
+  border-radius: 5px;
+  background-color: lightgray;
+  color: black;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.like-icon.like-active {
-  color: #e89a50; /* Change color when active */
+.like-button.like-active {
+  background-color: #e89a50; /* Active background color */
+  color: white; /* Active text color */
 }
 
-.like-icon:hover {
-  color: rgba(255, 127, 80, 0.45); /* Change color on hover */
+.like-button:hover {
+  background-color: rgba(255, 127, 80, 0.45); /* Hover state */
+  color: white;
 }
 

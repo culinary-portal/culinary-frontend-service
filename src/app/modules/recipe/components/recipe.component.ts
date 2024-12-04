@@ -4,8 +4,8 @@ import { RecipeService } from '../services/recipe.service';
 import { Recipe } from '../model/recipe';
 import {GeneralRecipeDetails} from "../../generalrecipe/model/general-recipe-details";
 import { Review } from '../../review/model/review';
-import { AuthService } from 'src/app/shared/services/auth/auth.service'; // Import AuthService
-import {UserFavRecipesComponent} from "../../user_preferences/user-fav-recipes/user-fav-recipes.component";
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import {UserPreferencesService} from "src/app/modules/user_preferences/services/user-preferences.service";
 
 @Component({
   selector: 'app-recipes',
@@ -35,7 +35,8 @@ export class RecipeComponent implements OnInit {
     private route: ActivatedRoute,
     private recipeService: RecipeService,
     private authService: AuthService, // Inject AuthService
-    private router: Router
+    private router: Router,
+    private userPreferencesService: UserPreferencesService,
   ) {
   }
 
@@ -153,6 +154,31 @@ export class RecipeComponent implements OnInit {
       },
     });
   }
+
+  saveRecipe(): void {
+    if (!this.isLoggedIn) {
+      alert('You must be logged in to save a recipe.');
+      return;
+    }
+
+    if (!this.generalRecipe?.generalRecipeId) {
+      alert('Recipe details are not loaded yet. Please try again later.');
+      return;
+    }
+
+    const recipeId = this.generalRecipe.generalRecipeId;
+
+    this.userPreferencesService.addFavoriteRecipe(this.userId!, recipeId).subscribe({
+      next: () => {
+        alert('Recipe saved to favorites successfully!');
+      },
+      error: (err) => {
+        console.error('Error saving recipe to favorites:', err);
+        alert('Failed to save the recipe to favorites. Please try again.');
+      },
+    });
+  }
+
 }
 
 

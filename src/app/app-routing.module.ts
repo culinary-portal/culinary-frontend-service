@@ -26,10 +26,10 @@ const routes: Routes = [
     loadChildren: () => import('./modules/generalrecipe/generalrecipe.module').then(m => m.GeneralRecipeModule)
   },
   {path: 'products', component: SearchresultComponent},
-  {path: 'recipes/:id', component: RecipeComponent }, // Add this route
+  {path: 'recipes/:id', component: RecipeComponent },
   { path: 'profile', component: ProfileComponent},
   { path: 'favorite-recipes', component: UserFavRecipesComponent },
-  { path: 'favorite-diets', component: UserFavDietsComponent },// New route for user preferences
+  { path: 'favorite-diets', component: UserFavDietsComponent },
   { path: '', redirectTo: '/general-recipes', pathMatch: 'full'},
   {path: '**', component: Page404Component, data: {message: 'Oops... This is a Bad request'}},
 ];

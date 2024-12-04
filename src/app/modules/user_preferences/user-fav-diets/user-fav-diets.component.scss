@@ -1,4 +1,5 @@
-/* General Styles */
+/*
+!* General Styles *!
 body {
   font-family: Arial, sans-serif;
   background-color: #fbead2;
@@ -15,7 +16,7 @@ ul {
   padding: 0;
 }
 
-/* Profile Section */
+!* Profile Section *!
 .profile-section {
   text-align: center;
   margin-bottom: 20px;
@@ -28,7 +29,7 @@ ul {
   object-fit: cover;
   margin-bottom: 10px;
 }
-/* Diets Section */
+!* Diets Section *!
 .favorite-diets-container {
   text-align: center;
 }
@@ -76,3 +77,58 @@ ul {
   background-color: #f44336;
   color: white;
 }
+*/
+.preferences-container {
+  max-width: 500px;
+  margin: 20px auto;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+.diet-item {
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+}
+
+.diet-item label {
+  font-size: 1rem;
+  color: #333;
+  cursor: pointer;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.save-button,
+.reset-button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+}
+
+.save-button {
+  background-color: #28a745;
+  color: white;
+}
+
+.save-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.reset-button {
+  background-color: #dc3545;
+  color: white;
+}
+
+
