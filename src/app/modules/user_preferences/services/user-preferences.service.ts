@@ -6,6 +6,7 @@ import {environment} from "../../../../environments/environment";
 import { UserDetailsDTO } from 'src/app/modules/user/model/user-details'
 import {RecipeComponent} from "../../recipe/components/recipe.component";
 import {RecipeService} from "src/app/modules/recipe/services/recipe.service"
+import {Diet} from 'src/app/modules/diet/model/diet'
 
 @Injectable({
   providedIn: 'root'
@@ -64,6 +65,10 @@ export class UserPreferencesService {
 
   getUserDetails(userId: number | undefined): Observable<UserDetailsDTO> {
     return this.http.get<UserDetailsDTO>(`${this.baseUrl}/user/${userId}`);
+  }
+
+  getAllDiets() {
+    return this.http.get<Diet[]>(`${this.baseUrl}/diet-types`);
   }
 }
 

@@ -5,7 +5,7 @@
   <div *ngIf="favoriteRecipes.length === 0" class="no-recipes-message">
     No favorite recipes added yet.
   </div>
-
+  <div class="recipes-grid">
   <!-- Iterate through the favorite recipes -->
   <div *ngFor="let recipe of favoriteRecipes" class="recipe-card">
     <img
@@ -21,12 +21,9 @@
         </a>
       </h3>
     </div>
-    <div class="recipe-rating">
-      <span class="star">&#9733;</span>
-      <span>{{ recipe.rating }}</span>
-    </div>
     <button class="remove-btn" (click)="removeFavoriteRecipe(recipe.generalRecipeId)">
       Remove
     </button>
+  </div>
   </div>
 </div>
