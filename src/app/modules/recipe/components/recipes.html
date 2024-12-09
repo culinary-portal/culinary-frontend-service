@@ -30,12 +30,11 @@
 
   <!-- Ingredients and Steps Section -->
   <div class="details-section">
-    <!-- Ingredients -->
     <div class="ingredients-container">
       <h2>Ingredients</h2>
       <ul>
         <li *ngFor="let ingredient of generalRecipe?.baseRecipe?.contains">
-          {{ ingredient.amount }} {{ ingredient.measure }} {{ ingredient.ingredient.name }}
+          {{ ingredient.amount * (Number(ingredient.measure)) }} grams of {{ ingredient.ingredient.name }}
         </li>
       </ul>
     </div>

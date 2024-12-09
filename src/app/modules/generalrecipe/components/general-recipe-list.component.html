@@ -51,10 +51,9 @@
         </li>
       </ul>
 
-      <!-- Paginator Component -->
-      <mat-paginator [length]="totalElements" [pageSize]="pageSize" [pageSizeOptions]="[5, 10 , 15]"
-                     (page)="onPageChange($event)">
+        <mat-paginator [length]="totalElements" [pageSize]="pageSize" (page)="onPageChange($event)">
       </mat-paginator>
+
     </div>
 
     <!-- Right Sidebar (Sorting Section) -->
@@ -85,8 +84,7 @@
         Ranking - High to Low
       </button>
     </div>
-    <div *ngIf="isLoading">Loading recipes...</div>
-    <div *ngIf="error" class="error">{{ error }}</div>
+
 
 
   </div>

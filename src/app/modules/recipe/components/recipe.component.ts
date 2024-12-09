@@ -179,6 +179,7 @@ export class RecipeComponent implements OnInit {
     });
   }
 
+  protected readonly Number = Number;
 }
 
 
