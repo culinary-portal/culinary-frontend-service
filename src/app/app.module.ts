@@ -25,6 +25,8 @@ import { ProfileComponent } from './core/components/profile/profile.component';
 import { UserFavRecipesComponent } from './modules/user_preferences/user-fav-recipes/user-fav-recipes.component';
 import { UserFavDietsComponent } from './modules/user_preferences/user-fav-diets/user-fav-diets.component';
 import { SettingsComponent } from './modules/user_preferences/settings/settings.component';
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatPaginatorModule} from "@angular/material/paginator";
 
 @NgModule({
   declarations: [
@@ -52,6 +54,9 @@ import { SettingsComponent } from './modules/user_preferences/settings/settings.
     MatDialogModule,
     FormsModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,  // Required for Material animations
+    MatPaginatorModule,       // Required for paginator
+    MatTooltipModule,
     AppRoutingModule,
     SharedModule,
     MatSnackBarModule,

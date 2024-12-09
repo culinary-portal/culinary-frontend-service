@@ -3,6 +3,7 @@ import {GeneralRecipeService} from '../services/general-recipe.service';
 import {GeneralRecipeDetails} from '../model/general-recipe-details';
 import {loadJsonConfig} from '../../../shared/helper/loadConfigJson';
 import {ActivatedRoute, Router} from "@angular/router";
+import {PageEvent} from "@angular/material/paginator";
 
 
 @Component({
@@ -12,6 +13,10 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class GeneralRecipeListComponent implements OnInit {
   generalRecipes: GeneralRecipeDetails[] = [];
+  totalElements = 0;
+  pageSize = 10;
+  currentPage = 0;
+
   isLoading = true;
   error: string | null = null;
   minCalories: number | null = null;
@@ -29,9 +34,10 @@ export class GeneralRecipeListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadDietConfig();
+    this.loadMealConfig();
     this.route.paramMap.subscribe(params => {
       this.selectedMealType = params.get('mealType');
-      this.fetchRecipes(); // Fetch recipes based on the selected meal type
+      this.fetchRecipes();
     });
     this.loadMealConfig();
   }
@@ -57,7 +63,7 @@ export class GeneralRecipeListComponent implements OnInit {
         this.configMealTypes = config.configMealTypes;
       })
       .catch(() => {
-        this.error = 'Failed to load diet configuration';
+        this.error = 'Failed to load meal configuration';
       });
   }
 
@@ -67,12 +73,15 @@ export class GeneralRecipeListComponent implements OnInit {
       diets: this.selectedDiets,
       minCalories: this.minCalories,
       maxCalories: this.maxCalories,
-      mealType: this.selectedMealType
+      mealType: this.selectedMealType,
+      page: this.currentPage,
+      size: this.pageSize
     };
 
     this.generalRecipeService.getGeneralRecipes(filters).subscribe({
-      next: (recipes: GeneralRecipeDetails[]) => {
-        this.generalRecipes = recipes;
+      next: (data) => {
+        this.generalRecipes = data.content;
+        this.totalElements = data.totalElements;
         this.isLoading = false;
       },
       error: (err: { message: string | null }) => {
@@ -81,6 +90,13 @@ export class GeneralRecipeListComponent implements OnInit {
       }
     });
   }
+
+  onPageChange(event: PageEvent): void {
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+    this.fetchRecipes();
+  }
+
 
   onDietFilterChange(event: any): void {
     const diet = event.target.value;
@@ -97,6 +113,7 @@ export class GeneralRecipeListComponent implements OnInit {
   }
 
   sortRecipes(criteria: string): void {
+    const compare = (a: any, b: any) => criteria.endsWith('Increase') ? a - b : b - a;
     switch (criteria) {
       case 'caloriesIncrease':
         this.generalRecipes.sort((a, b) => a.calories - b.calories);
@@ -118,7 +135,8 @@ export class GeneralRecipeListComponent implements OnInit {
         break;
     }
   }
+
   viewRecipeDetails(id: number): void {
-    this.router.navigate(['/recipes', id]); // Navigates to the details screen
+    this.router.navigate(['/recipes', id]);
   }
 }

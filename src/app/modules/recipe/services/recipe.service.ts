@@ -16,6 +16,7 @@ export class RecipeService {
   private apiUrl = `${environment.apiUrl}/api/recipes`;
   private reviewApiUrl = `${environment.apiUrl}/api/reviews`;
   private baseUrl = `${environment.apiUrl}/api`;
+
   constructor(private http: HttpClient) {}
 
   // Fetch all recipes
