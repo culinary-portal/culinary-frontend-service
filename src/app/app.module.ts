@@ -27,6 +27,8 @@ import { UserFavDietsComponent } from './modules/user_preferences/user-fav-diets
 import { SettingsComponent } from './modules/user_preferences/settings/settings.component';
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatPaginatorModule} from "@angular/material/paginator";
+import { SubstitutesComponent } from './modules/substitute/components/substitutes/substitutes.component';
+import { ModifiedRecipeComponent } from './modules/user_preferences/modified-recipe/modified-recipe.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,9 @@ import {MatPaginatorModule} from "@angular/material/paginator";
     ProfileComponent,
     UserFavRecipesComponent,
     UserFavDietsComponent,
-    SettingsComponent
+    SettingsComponent,
+    SubstitutesComponent,
+    ModifiedRecipeComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,5 @@
 <div class="settings-container">
-  <h2>Update Profile</h2>
+  <h1>Update Profile</h1>
   <form [formGroup]="settingsForm" (ngSubmit)="onSubmit()">
     <div class="form-group">
       <label for="email">Email</label>
@@ -28,6 +28,16 @@
         formControlName="birthdate"
         type="date"
         placeholder="Enter your birthdate"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="userName">PhotoUrl</label>
+      <input
+        id="photoUrl"
+        formControlName="photoUrl"
+        type="text"
+        placeholder="Provide URL to you photo"
       />
     </div>
 

@@ -1,27 +1,32 @@
 <div class="preferences-container">
   <h1>Your Diet Preferences</h1>
 
-  <div *ngFor="let diet of availableDiets" class="diet-item">
-    <label>
-      <input
-        type="checkbox"
-        [checked]="selectedDiets.includes(diet.dietTypeId)"
-        (change)="savePreferences(diet.dietTypeId)"
-      />
-      {{ diet.dietType }}
-    </label>
+  <div class="diet-list">
+    <!-- Iterate over the diets -->
+    <div
+      class="diet-item"
+      *ngFor="let diet of availableDiets"
+      [class.selected]="selectedDiets.includes(diet.dietTypeId)"
+      (click)="savePreferences(diet.dietTypeId)"
+    >
+      <div class="diet-icon">
+        <i class="{{ diet.icon }}"></i>
+      </div>
+      <span class="diet-name">{{ diet.dietType }}</span>
+    </div>
   </div>
 
   <div class="actions">
-    <!--<button
-      [disabled]="isSaving"
-      (click)="savePreferences(diet)"
-      class="save-button"
+    <button
+      class="reset-button"
+      [disabled]="selectedDiets.length === 0"
+      (click)="resetDietPreferences()"
     >
-      {{ isSaving ? 'Saving...' : 'Save Preferences' }}
-    </button>-->
+      Reset Preferences
+    </button>
   </div>
 </div>
+
 
 
 

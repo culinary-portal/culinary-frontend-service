@@ -70,6 +70,7 @@ export class SettingsComponent {
           id: userId, // Always include the user ID
           email: this.settingsForm.value.email,
           userName: this.settingsForm.value.userName,
+          photoUrl: this.settingsForm.value.photoUrl, // Include photoUrl
           birthdate: this.settingsForm.value.birthdate
         };
 

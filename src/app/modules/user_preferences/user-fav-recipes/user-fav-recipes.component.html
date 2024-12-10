@@ -1,7 +1,7 @@
 <div class="favorites-section">
-  <h2>Favourite Recipes</h2>
-
-  <!-- Display a message if there are no favorite recipes -->
+  <div class="recipe-container">
+    <h1>Favourite Recipes</h1>
+    <!-- Display a message if there are no favorite recipes -->
   <div *ngIf="favoriteRecipes.length === 0" class="no-recipes-message">
     No favorite recipes added yet.
   </div>
@@ -24,6 +24,7 @@
     <button class="remove-btn" (click)="removeFavoriteRecipe(recipe.generalRecipeId)">
       Remove
     </button>
+  </div>
   </div>
   </div>
 </div>

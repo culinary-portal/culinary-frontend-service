@@ -51,10 +51,32 @@ export class UserFavDietsComponent implements OnInit {
     );
   }
 
+  /*loadAvailableDiets(): void {
+    this.userPreferencesService.getAllDiets().subscribe(
+      /!*(data: Diet[]) => {
+        this.availableDiets = data;
+      },*!/
+      (data: Diet[]) => {
+        this.availableDiets = data.map((diet) => ({
+          ...diet,
+          icon: this.getDietIcon(diet.dietType), // Assign icon
+        }));
+      },
+      (error: any) => {
+        console.error('Error fetching available diets:', error);
+        alert('Failed to load available diets. Please try again later.');
+      }
+    );
+  }*/
+
   loadAvailableDiets(): void {
     this.userPreferencesService.getAllDiets().subscribe(
       (data: Diet[]) => {
-        this.availableDiets = data;
+        console.log('Received diet data:', data); // Debugging line
+        this.availableDiets = data.map((diet) => ({
+          ...diet,
+          icon: this.getDietIcon(diet.dietType), // Assign icon
+        }));
       },
       (error: any) => {
         console.error('Error fetching available diets:', error);
@@ -62,6 +84,25 @@ export class UserFavDietsComponent implements OnInit {
       }
     );
   }
+
+
+  getDietIcon(dietType: string): string {
+    const iconMap: { [key: string]: string } = {
+      'LACTOSE-FREE': 'fas fa-glass-whiskey',
+      'GLUTEN-FREE': 'fas fa-bread-slice',
+      'VEGAN': 'fas fa-leaf',
+      'VEGETARIAN': 'fas fa-carrot',
+      'KETO': 'fas fa-bacon',
+    };
+
+    // Normalize the dietType string
+    const normalizedDietType = dietType.trim().toUpperCase();
+
+    // Return the corresponding icon or the default
+    return iconMap[normalizedDietType] || 'fas fa-utensils';
+  }
+
+
 
   savePreferences(dietId: number): void {
     if (!this.userId) {

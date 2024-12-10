@@ -18,7 +18,8 @@ export class ProfileComponent implements OnInit {
   options: Option[] = []; // Use the Option model
 
   constructor(private userService: UserService,
-  private authService: AuthService, private router: Router) {}
+              private authService: AuthService, private router: Router) {
+  }
 
   ngOnInit(): void {
     if (!this.authService.isLoggedIn()) {
@@ -39,49 +40,20 @@ export class ProfileComponent implements OnInit {
           this.isLoading = false;
         },
       });
-    }
-    else {
+    } else {
       // Handle case where userDetails is null or id is missing
       this.error = 'User ID is missing. Please log in again.';
       this.authService.logout();
     }
 
     this.options = [
-      { id: 1, label: 'Favourite Recipes', icon: 'fa-solid fa-egg', route: '/favorite-recipes' },
-      { id: 2, label: 'My Modifications', icon: 'fa-solid fa-edit', route: '/my-modifications' },
-      { id: 3, label: 'My Favourite Diets', icon: 'fa-solid fa-utensils', route: '/favorite-diets' },
-      { id: 4, label: "Don't Like Ingredients", icon: 'fa-solid fa-ban', route: '/dont-like-ingredients' },
-      { id: 5, label: 'Settings', icon: 'fa-solid fa-cog', route: '/settings' },
+      {id: 1, label: 'Favourite Recipes', icon: 'fa-solid fa-egg', route: '/favorite-recipes'},
+      {id: 2, label: 'My Modifications', icon: 'fa-solid fa-edit', route: '/my-modifications'},
+      {id: 3, label: 'My Favourite Diets', icon: 'fa-solid fa-utensils', route: '/favorite-diets'},
+      {id: 4, label: 'Settings', icon: 'fa-solid fa-cog', route: '/settings'},
     ];
 
 
-
-
   }
-
-/*  addSpecific(): void {
-    const newSpecific = new SpecificDetails(0, 'New Preference', 'Example Value');
-    this.userService.addSpecific(this.user.id, newSpecific).subscribe({
-      next: (updatedUser) => {
-        this.user = updatedUser;
-      },
-      error: (err) => {
-        this.error = 'Failed to add specific detail.';
-        console.error(err);
-      },
-    });
-  }*/
-
-  /*deleteSpecific(specificId: number): void {
-    this.userService.deleteSpecific(this.user.id, specificId).subscribe({
-      next: (updatedUser) => {
-        this.user = updatedUser;
-      },
-      error: (err) => {
-        this.error = 'Failed to delete specific detail.';
-        console.error(err);
-      },
-    });
-  }*/
 }
 

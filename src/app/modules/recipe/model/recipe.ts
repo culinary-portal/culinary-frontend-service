@@ -5,6 +5,4 @@ export interface Recipe {
   name: string;
   description: string;
   dietType: string;
-  generalRecipeId: number;
-  contains: Contains[];
 }

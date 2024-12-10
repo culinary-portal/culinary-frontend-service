@@ -5,6 +5,26 @@ body {
   color: #333;
 }
 
+.recipe-container {
+  max-width: 10000px;
+  margin: 0 auto;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  background-color: #e89a50;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.recipe-container h1 {
+  font-size: 32px; /* Make the text larger */
+  font-weight: bold; /* Add more weight */
+  color: #ffffff; /* White text to contrast with orange background */
+  text-align: center; /* Center the text */
+  margin-bottom: 20px; /* Add spacing below */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); /* Add a subtle shadow */
+}
+
 .profile-page {
   display: flex;
   flex-direction: column;
