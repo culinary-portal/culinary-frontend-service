@@ -80,8 +80,8 @@ export class GeneralRecipeListComponent implements OnInit {
 
     this.generalRecipeService.getGeneralRecipes(filters).subscribe({
       next: (data) => {
-        this.generalRecipes = data.content;
-        this.totalElements = data.totalElements;
+        this.generalRecipes = data;
+        this.totalElements = data.length;
         this.isLoading = false;
       },
       error: (err: { message: string | null }) => {
@@ -94,7 +94,6 @@ export class GeneralRecipeListComponent implements OnInit {
   onPageChange(event: PageEvent): void {
     this.pageSize = event.pageSize;
     this.currentPage = event.pageIndex;
-    this.fetchRecipes();
   }
 
 

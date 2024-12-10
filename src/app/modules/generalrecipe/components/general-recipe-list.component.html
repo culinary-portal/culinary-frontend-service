@@ -32,29 +32,38 @@
       </div>
     </div>
 
-    <!-- Recipe List -->
-    <div class="w-2/4 p-4">
-      <h2 class="text-xl font-bold mb-4">Recipe List</h2>
+    <!-- Recipe List --><div class="w-2/4 p-4">
+    <h2 class="text-xl font-bold mb-4">Recipe List</h2>
 
-      <div *ngIf="isLoading" class="text-center">Loading recipes...</div>
-      <div *ngIf="error" class="text-center text-red-500">{{ error }}</div>
+    <div *ngIf="isLoading" class="text-center">Loading recipes...</div>
+    <div *ngIf="error" class="text-center text-red-500">{{ error }}</div>
 
-      <ul *ngIf="!isLoading && !error">
-        <li *ngFor="let recipe of generalRecipes" class="mb-4 p-4 bg-white rounded shadow">
-          <h3 class="font-bold text-blue-500 hover:underline cursor-pointer" (click)="viewRecipeDetails(recipe.generalRecipeId)">
-            {{ recipe.name }}
-          </h3>
-          <img [src]="recipe.photoUrl" alt="{{ recipe.name }}" class="w-full h-40 object-cover rounded-md mb-3">
-          <p>Calories: {{ recipe.calories }}</p>
-          <p>Protein: {{ recipe.protein }}g</p>
-          <p>⭐️: {{ recipe.rating }}</p>
-        </li>
-      </ul>
+    <ul *ngIf="!isLoading && !error">
+      <li
+        *ngFor="let recipe of generalRecipes.slice(currentPage * pageSize, (currentPage + 1) * pageSize)"
+        class="mb-4 p-4 bg-white rounded shadow">
 
-        <mat-paginator [length]="totalElements" [pageSize]="pageSize" (page)="onPageChange($event)">
-      </mat-paginator>
+        <h3 class="font-bold text-blue-500 hover:underline cursor-pointer"
+            (click)="viewRecipeDetails(recipe.generalRecipeId)">
+          {{ recipe.name }}
+        </h3>
 
-    </div>
+        <img [src]="recipe.photoUrl" alt="{{ recipe.name }}"
+             class="w-full h-40 object-cover rounded-md mb-3">
+
+        <p>Calories: {{ recipe.calories }}</p>
+        <p>Protein: {{ recipe.protein }}g</p>
+        <p>⭐️: {{ recipe.rating }}</p>
+      </li>
+    </ul>
+
+    <mat-paginator
+      [length]="totalElements"
+      [pageSize]="pageSize"
+      (page)="onPageChange($event)">
+    </mat-paginator>
+  </div>
+
 
     <!-- Right Sidebar (Sorting Section) -->
     <div class="w-1/4 p-4 bg-gray-100 rounded shadow">

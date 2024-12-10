@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { GeneralRecipeDetails } from '../model/general-recipe-details';
 import {environment} from "../../../../environments/environment";
 import { PageEvent } from '@angular/material/paginator';
-import {PagableGeneralRecipeDetails} from "../model/pagable-general-recipe-details";
 
 @Injectable({
   providedIn: 'root'
@@ -22,10 +21,9 @@ export class GeneralRecipeService {
     mealType: string | null;
     page: number;
     size: number;
-  }): Observable<PagableGeneralRecipeDetails> {
+  }): Observable<GeneralRecipeDetails []> {
     let params = new HttpParams()
-      .set('page', filters.page)
-      .set('size', filters.size);
+
 
     if (filters.diets && filters.diets.length > 0) {
       params = params.set('dietTypes', filters.diets.join(','));
