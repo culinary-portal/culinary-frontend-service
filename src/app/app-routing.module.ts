@@ -13,6 +13,7 @@ import { UserFavRecipesComponent } from './modules/user_preferences/user-fav-rec
 import { UserFavDietsComponent } from './modules/user_preferences/user-fav-diets/user-fav-diets.component';
 import{SettingsComponent} from "./modules/user_preferences/settings/settings.component";
 import {SubstitutesComponent} from "./modules/substitute/components/substitutes/substitutes.component";
+import {ModifiedRecipeComponent} from "./modules/user_preferences/modified-recipe/modified-recipe.component"
 
 const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full'},
@@ -32,6 +33,7 @@ const routes: Routes = [
   { path: 'favorite-recipes', component: UserFavRecipesComponent },
   { path: 'favorite-diets', component: UserFavDietsComponent },
   { path:'settings',component: SettingsComponent},
+  {path: 'my-modifications', component:ModifiedRecipeComponent},
   { path: 'substitutes/:id', component: SubstitutesComponent },
   { path: '', redirectTo: '/general-recipes', pathMatch: 'full'},
   { path: '**', component: Page404Component, data: {message: 'Oops... This is a Bad request'}},

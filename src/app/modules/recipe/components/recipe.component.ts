@@ -20,7 +20,6 @@ export class RecipeComponent implements OnInit {
   loading: boolean = true; // Loading indicator
   errorMessage: string = ''; // Error handling
   reviews: Review[] = [];
-  favoriteRecipes: number[] = [];
   userId: number | null = null;
 
   newReview: Review = {

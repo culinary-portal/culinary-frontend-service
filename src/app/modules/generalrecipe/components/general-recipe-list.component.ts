@@ -2,9 +2,14 @@ import {Component, OnInit} from '@angular/core';
 import {GeneralRecipeService} from '../services/general-recipe.service';
 import {GeneralRecipeDetails} from '../model/general-recipe-details';
 import {loadJsonConfig} from '../../../shared/helper/loadConfigJson';
-import {ActivatedRoute, Router} from "@angular/router";
 import {PageEvent} from "@angular/material/paginator";
-
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import {HttpClient} from "@angular/common/http";
+import {environment} from "../../../../environments/environment";
+import {Diet} from "../../diet/model/diet";
+import {UserPreferencesService} from "../../user_preferences/services/user-preferences.service";
+import {forkJoin} from "rxjs";
 
 @Component({
   selector: 'app-general-recipe-list',
@@ -18,22 +23,40 @@ export class GeneralRecipeListComponent implements OnInit {
   currentPage = 0;
 
   isLoading = true;
+  isLoggedIn = false;
   error: string | null = null;
   minCalories: number | null = null;
   maxCalories: number | null = null;
   selectedDiets: string[] = [];
-  configDietTypes: string[] = [];
+  configDietTypes: Diet[] = [];
   configMealTypes: string[] = [];
   selectedMealType: string | null = null;
+  favouriteDiets: Diet[] = [];
+
+  userId: number | undefined; // Assuming userId is available after login
 
   constructor(
     private generalRecipeService: GeneralRecipeService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private authService: AuthService,
+    private http: HttpClient,
+    private userPreferencesService: UserPreferencesService
   ) {}
 
   ngOnInit(): void {
-    this.loadDietConfig();
+
+    this.isLoggedIn = this.authService.isLoggedIn(); // Check if the user is logged in
+    if (this.isLoggedIn) {
+      const userDetails = this.authService.getUserDetails(); // Retrieve user details
+      if (userDetails && userDetails.id) {
+        this.userId = userDetails.id; // Set userId from user details
+      } else {
+        console.error('User details are missing or invalid.');
+      }
+    }
+    this.loadAllData();
+
     this.loadMealConfig();
     this.route.paramMap.subscribe(params => {
       this.selectedMealType = params.get('mealType');
@@ -47,13 +70,15 @@ export class GeneralRecipeListComponent implements OnInit {
   }
 
   loadDietConfig(): void {
-    loadJsonConfig('diet-config.json')
-      .then((config) => {
-        this.configDietTypes = config.dietTypes;
-      })
-      .catch(() => {
-        this.error = 'Failed to load diet configuration';
-      });
+    this.userPreferencesService.getAllDiets().subscribe(
+      (data: Diet[]) => {
+        this.configDietTypes = data;
+      },
+      (error: any) => {
+        console.error('Error fetching available diets:', error);
+        alert('Failed to load available diets. Please try again later.');
+      }
+    );
   }
 
 
@@ -137,5 +162,50 @@ export class GeneralRecipeListComponent implements OnInit {
 
   viewRecipeDetails(id: number): void {
     this.router.navigate(['/recipes', id]);
+  }
+
+ /* fetchFavouriteDiets(): void {
+    if (!this.isLoggedIn) return;
+
+    const url = `${environment.apiUrl}/api/user/${this.userId}/favorite-diets`; // Adjust endpoint as needed
+    this.http.get<string[]>(url).subscribe({
+      next: (data) => {
+        this.favouriteDiets = data;
+        console.log('Favorite diets fetched successfully:', data);
+      },
+      error: (err) => {
+        console.error('Failed to fetch favorite diets:', err);
+      }
+    });
+  }*/
+
+  loadAllData(): void {
+    if (!this.isLoggedIn || !this.userId) {
+      console.error('User is not logged in or userId is missing.');
+      return;
+    }
+
+    const diets$ = this.http.get<Diet[]>(`${environment.apiUrl}/api/diet-types`);
+    const favouriteDiets$ = this.http.get<Diet[]>(
+      `${environment.apiUrl}/api/user/${this.userId}/favorite-diets`
+    );
+
+    forkJoin([diets$, favouriteDiets$]).subscribe({
+      next: ([diets, favouriteDiets]) => {
+        this.configDietTypes = diets; // Populate available diets
+        this.favouriteDiets = favouriteDiets; // Populate favorite diets
+
+        // By default, set selected diets to favourite diets
+        this.selectedDiets = this.favouriteDiets.map((diet) => diet.dietType);
+
+        console.log('Diets loaded:', this.configDietTypes);
+        console.log('Favourite diets loaded:', this.favouriteDiets);
+        console.log('Selected diets (default):', this.selectedDiets);
+      },
+      error: (err) => {
+        console.error('Error loading diets or favorites:', err);
+        alert('Failed to load diets. Please try again later.');
+      },
+    });
   }
 }

@@ -1,4 +1,4 @@
-<section class="w-full flex-1 bg-[#fef4e8] py-10">
+<!--<section class="w-full flex-1 bg-[#fef4e8] py-10">
   <article class="mb-10 max-w-7xl mx-auto px-4">
     <h3 class="text-4xl font-bold mb-3 text-center text-black">Choose time of the day</h3>
 
@@ -22,4 +22,31 @@
       </div>
     </div>
   </article>
+</section>-->
+
+<section class="w-full flex-1 bg-[#E89A50FF] py-10 rounded-3xl">
+  <article class="mb-10 max-w-7xl mx-auto px-4">
+    <h3 class="text-4xl font-bold mb-3 text-center text-white" style="text-shadow: 2px 2px 4px black;">Choose time of the day</h3>
+
+    <div *ngIf="error && isLoading" class="flex justify-center items-center h-[60vh]">
+      <div class="text-red-500 flex flex-col justify-center items-center">
+        <i class="fa-solid fa-circle-exclamation text-6xl"></i>
+        <h4 class="text-md px-4 py-2">HTTP ERROR Occured</h4>
+      </div>
+    </div>
+
+    <div *ngIf="!error && isLoading" class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-5">
+      <app-cardskeleton *ngFor="let skeleton of skeletons"></app-cardskeleton>
+    </div>
+
+    <div *ngIf="!isLoading && mealTypes.length>0" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 px-4">
+      <div *ngFor="let mealType of mealTypes" class="relative flex flex-col items-center justify-center w-full bg-white rounded-xl shadow-lg hover:scale-105 transition-transform duration-300">
+        <a [routerLink]="['/','general-recipes', mealType.title]" class="w-full overflow-hidden rounded-t-xl bg-green-800">
+          <h5 class="mb-2 text-sm tracking-tight text-gray-900 dark:text-white text-center">{{ mealType.title }}</h5>
+          <img [alt]="mealType.title" [src]="mealType.photoUrl" class="w-full h-40 object-cover rounded-t-xl"/>
+        </a>
+      </div>
+    </div>
+  </article>
 </section>
+

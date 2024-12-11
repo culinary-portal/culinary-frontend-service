@@ -7,65 +7,70 @@
       <div class="mb-4">
         <label class="block mb-2 font-semibold">Diet Type</label>
         <div *ngFor="let diet of configDietTypes">
-          <input type="checkbox" [value]="diet" (change)="onDietFilterChange($event)" class="mr-2">
-          <label>{{ diet }}</label>
+          <input
+            type="checkbox"
+            [value]="diet.dietType"
+            (change)="onDietFilterChange($event)"
+            class="mr-2 accent-green-800"
+            [checked]="selectedDiets.includes(diet.dietType)"
+          />
+          <label>{{ diet.dietType }}</label>
         </div>
       </div>
 
       <div class="mb-4">
         <label class="block mb-2 font-semibold">Meal Type</label>
-        <select [(ngModel)]="selectedMealType" class="w-full p-2 border rounded" (change)="onMealTypeChange()">
-          <option selected="All"*ngFor="let mealType of configMealTypes" [value]="mealType === 'All' ? '' : mealType">{{ mealType }}</option>
+        <select [(ngModel)]="selectedMealType" class="w-full p-2 border rounded bg-white text-green-800" (change)="onMealTypeChange()">
+          <option selected="All" *ngFor="let mealType of configMealTypes" [value]="mealType === 'All' ? '' : mealType">{{ mealType }}</option>
         </select>
       </div>
-
 
       <div class="mb-4">
         <label class="block mb-2 font-semibold">Calories</label>
         <div class="flex">
-          <input type="number" placeholder="Min" class="border rounded p-2 mr-2 w-1/2" [(ngModel)]="minCalories">
-          <input type="number" placeholder="Max" class="border rounded p-2 w-1/2" [(ngModel)]="maxCalories">
+          <input type="number" placeholder="Min" class="border rounded p-2 mr-2 w-1/2 bg-white text-green-800" [(ngModel)]="minCalories">
+          <input type="number" placeholder="Max" class="border rounded p-2 w-1/2 bg-white text-green-800" [(ngModel)]="maxCalories">
         </div>
-        <button class="mt-2 p-2 bg-blue-500 text-white rounded" (click)="onFilterByCalories()">
+        <button class="mt-2 p-2 bg-green-800 text-white rounded hover:bg-green-900" (click)="onFilterByCalories()">
           Apply
         </button>
       </div>
     </div>
 
-    <!-- Recipe List --><div class="w-2/4 p-4">
-    <h2 class="text-xl font-bold mb-4">Recipe List</h2>
 
-    <div *ngIf="isLoading" class="text-center">Loading recipes...</div>
-    <div *ngIf="error" class="text-center text-red-500">{{ error }}</div>
+    <!-- Recipe List -->
+    <div class="w-2/4 p-4">
+      <h2 class="text-xl font-bold mb-4">Recipe List</h2>
 
-    <ul *ngIf="!isLoading && !error">
-      <li
-        *ngFor="let recipe of generalRecipes.slice(currentPage * pageSize, (currentPage + 1) * pageSize)"
-        class="mb-4 p-4 bg-white rounded shadow">
+      <div *ngIf="isLoading" class="text-center">Loading recipes...</div>
+      <div *ngIf="error" class="text-center text-red-500">{{ error }}</div>
 
-        <h3 class="font-bold text-blue-500 hover:underline cursor-pointer"
-            (click)="viewRecipeDetails(recipe.generalRecipeId)">
-          {{ recipe.name }}
-        </h3>
+      <ul *ngIf="!isLoading && !error">
+        <li
+          *ngFor="let recipe of generalRecipes.slice(currentPage * pageSize, (currentPage + 1) * pageSize)"
+          class="mb-4 p-4 bg-white rounded shadow">
 
-        <img [src]="recipe.photoUrl" alt="{{ recipe.name }}"
-             class="w-full h-40 object-cover rounded-md mb-3">
+          <h3 class="font-bold text-green-800 hover:underline cursor-pointer"
+              (click)="viewRecipeDetails(recipe.generalRecipeId)">
+            {{ recipe.name }}
+          </h3>
 
-        <p>Calories: {{ recipe.calories }}</p>
-        <p>Protein: {{ recipe.protein }}g</p>
-        <p>⭐️: {{ recipe.rating }}</p>
-      </li>
-    </ul>
+          <img [src]="recipe.photoUrl" alt="{{ recipe.name }}"
+               class="w-full h-40 object-cover rounded-md mb-3">
 
-    <mat-paginator
-      [length]="totalElements"
-      [pageSize]="pageSize"
-      (page)="onPageChange($event)">
-    </mat-paginator>
-  </div>
+          <p>Calories: {{ recipe.calories }}</p>
+          <p>Protein: {{ recipe.protein }}g</p>
+          <p>⭐️: {{ recipe.rating }}</p>
+        </li>
+      </ul>
 
+      <mat-paginator
+        [length]="totalElements"
+        [pageSize]="pageSize"
+        (page)="onPageChange($event)">
+      </mat-paginator>
+    </div>
 
-    <!-- Right Sidebar (Sorting Section) -->
     <div class="w-1/4 p-4 bg-gray-100 rounded shadow">
       <h3 class="font-semibold mb-4">Sort by</h3>
 
@@ -93,8 +98,8 @@
         Ranking - High to Low
       </button>
     </div>
-
-
-
   </div>
 </div>
+
+
+

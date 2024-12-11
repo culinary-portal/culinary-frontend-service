@@ -3,7 +3,7 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 20px;
-  background-color: #ffe7cf; /* Soft beige background */
+  background-color: #f5f5f5;
   border-radius: 10px;
 }
 
@@ -15,7 +15,7 @@
 .recipe-title {
   font-size: 2rem;
   font-weight: bold;
-  color: #d35400; /* Orange color */
+  color: #033528; /* Orange color */
 }
 
 .recipe-image-container {
@@ -43,7 +43,7 @@
   background-color: #fff; /* White background */
   padding: 15px; /* Inner spacing */
   border-radius: 10px; /* Rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   margin: 20px auto; /* Center alignment with space above and below */
   width: fit-content; /* Fit the content width */
   text-align: center; /* Center align text */
@@ -60,7 +60,7 @@
 }
 
 .favorite-icon {
-  color: #ffe7cf; /* Red color */
+  color: #065f46; /* Red color */
   font-size: 1.5rem;
 }
 
@@ -81,7 +81,7 @@
 .ingredients-container h2,
 .steps-container h2 {
   font-size: 1.5rem;
-  color: #d35400;
+  color: #065f46;
   margin-bottom: 10px;
 }
 
@@ -167,9 +167,9 @@ span {
     }
 
     input:checked + span {
-      background-color: #4caf50;
+      background-color: #f47300;
       color: white;
-      border-color: #4caf50;
+      border-color: #f47300;
     }
   }
 }
@@ -220,7 +220,7 @@ span {
 }
 
 .login-button {
-  background-color: #ff9800; /* Orange background */
+  background-color: #e89a50; /* Orange background */
   color: white;
   border: none;
   border-radius: 5px;
@@ -239,7 +239,7 @@ margin-top: 20px; /* Add space above */
 }
 
 .explore-button {
-  background-color: #ff9800; /* Same orange background */
+  background-color: #065f46; /* Same orange background */
   color: white;
   border: none;
   border-radius: 5px;
@@ -249,7 +249,7 @@ margin-top: 20px; /* Add space above */
 }
 
 .explore-button:hover {
-  background-color: #e68a00; /* Darker orange on hover */
+  background-color: #033528; /* Darker orange on hover */
 }
 
 .like-button {
@@ -258,25 +258,20 @@ margin-top: 20px; /* Add space above */
   cursor: pointer;
   border: none;
   border-radius: 5px;
-  background-color: lightgray;
-  color: black;
+  background-color: #065f46;
+  color: white;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.like-button.like-active {
-  background-color: #e89a50; /* Active background color */
-  color: white; /* Active text color */
-}
-
 .like-button:hover {
-  background-color: rgba(255, 127, 80, 0.45); /* Hover state */
+  background-color: rgb(3, 53, 40); /* Hover state */
   color: white;
 }
 
 .substitute-button {
   background: none;
   border: none;
-  color: orange;
+  color: #e89a50;
   font-size: 1.2em;
   cursor: pointer;
   margin-left: 5px;
@@ -288,7 +283,7 @@ margin-top: 20px; /* Add space above */
 }
 
 .circular-button {
-  background-color: orange;
+  background-color: #e89a50;
   border: none;
   color: white;
   font-size: 0.5em;
@@ -303,7 +298,7 @@ margin-top: 20px; /* Add space above */
 }
 
 .circular-button:hover {
-  background-color: darkorange;
+  background-color: #f47300;
 }
 
 .circular-button i {
