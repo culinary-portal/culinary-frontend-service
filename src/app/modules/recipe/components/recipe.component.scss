@@ -39,29 +39,40 @@
   border-radius: 10px;
 }
 
-.nutrition-container {
-  background-color: #fff; /* White background */
-  padding: 15px; /* Inner spacing */
-  border-radius: 10px; /* Rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin: 20px auto; /* Center alignment with space above and below */
-  width: fit-content; /* Fit the content width */
-  text-align: center; /* Center align text */
-}
 
+.nutrition-container {
+  background-color: #e89a50;
+  color: white; /* White text */
+  text-shadow: 1px 1px 2px black; /* Black shadow for better readability */
+  padding: 2px 5px; /* Minimal padding for a thinner appearance */
+  border-radius: 5px; /* Subtle rounded corners */
+  margin: 5px 5px; /* Minimal vertical space */
+  width: 100%; /* Full width */
+  font-size: 1rem; /* Slightly smaller font for compactness */
+  font-weight: bold; /* Bold font */
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center content horizontally */
+  gap: 50px; /* Space between text and button */
+}
 
 .nutrition-info {
   display: flex;
+  color: white;
   justify-content: center;
-  gap: 15px;
-  margin: 20px 0;
-  font-size: 1.1rem;
-  font-weight: bold;
+  gap: 25px; /* Reduced gap between elements */
+  margin: 5px 0; /* Compact vertical margin */
+  font-size: 1.1rem; /* Aligns with the container font size */
 }
 
 .favorite-icon {
-  color: #065f46; /* Red color */
-  font-size: 1.5rem;
+  background-color: #1b5e20;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 5px 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  align-self: flex-end;
 }
 
 .details-section {
@@ -167,7 +178,7 @@ span {
     }
 
     input:checked + span {
-      background-color: #f47300;
+      background-color: #e89a50;
       color: white;
       border-color: #f47300;
     }

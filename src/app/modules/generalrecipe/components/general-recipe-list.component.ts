@@ -164,48 +164,52 @@ export class GeneralRecipeListComponent implements OnInit {
     this.router.navigate(['/recipes', id]);
   }
 
- /* fetchFavouriteDiets(): void {
-    if (!this.isLoggedIn) return;
-
-    const url = `${environment.apiUrl}/api/user/${this.userId}/favorite-diets`; // Adjust endpoint as needed
-    this.http.get<string[]>(url).subscribe({
-      next: (data) => {
-        this.favouriteDiets = data;
-        console.log('Favorite diets fetched successfully:', data);
-      },
-      error: (err) => {
-        console.error('Failed to fetch favorite diets:', err);
-      }
-    });
-  }*/
 
   loadAllData(): void {
-    if (!this.isLoggedIn || !this.userId) {
-      console.error('User is not logged in or userId is missing.');
-      return;
-    }
-
     const diets$ = this.http.get<Diet[]>(`${environment.apiUrl}/api/diet-types`);
-    const favouriteDiets$ = this.http.get<Diet[]>(
-      `${environment.apiUrl}/api/user/${this.userId}/favorite-diets`
-    );
 
-    forkJoin([diets$, favouriteDiets$]).subscribe({
-      next: ([diets, favouriteDiets]) => {
-        this.configDietTypes = diets; // Populate available diets
-        this.favouriteDiets = favouriteDiets; // Populate favorite diets
+    // Only fetch favourite diets if the user is logged in and userId is defined
+    const favouriteDiets$ = this.isLoggedIn && this.userId
+      ? this.http.get<Diet[]>(`${environment.apiUrl}/api/user/${this.userId}/favorite-diets`)
+      : null;
 
-        // By default, set selected diets to favourite diets
-        this.selectedDiets = this.favouriteDiets.map((diet) => diet.dietType);
+    if (favouriteDiets$) {
+      // Handle logged-in users
+      forkJoin([diets$, favouriteDiets$]).subscribe({
+        next: ([diets, favouriteDiets]) => {
+          this.configDietTypes = diets; // Populate available diets
+          this.favouriteDiets = favouriteDiets; // Populate favorite diets
 
-        console.log('Diets loaded:', this.configDietTypes);
-        console.log('Favourite diets loaded:', this.favouriteDiets);
-        console.log('Selected diets (default):', this.selectedDiets);
-      },
-      error: (err) => {
-        console.error('Error loading diets or favorites:', err);
-        alert('Failed to load diets. Please try again later.');
-      },
-    });
+          // Set selected diets to favourite diets by default
+          this.selectedDiets = this.favouriteDiets.map((diet) => diet.dietType);
+
+          console.log('Diets loaded:', this.configDietTypes);
+          console.log('Favourite diets loaded:', this.favouriteDiets);
+          console.log('Selected diets (default):', this.selectedDiets);
+
+          // Apply default filter
+          this.fetchRecipes();
+        },
+        error: (err) => {
+          console.error('Error loading diets or favorites:', err);
+          alert('Failed to load diets. Please try again later.');
+        },
+      });
+    } else {
+      // Handle not-logged-in users
+      diets$.subscribe({
+        next: (diets) => {
+          this.configDietTypes = diets; // Populate available diets
+          this.selectedDiets = []; // No default selection
+          console.log('Diets loaded for guest user:', this.configDietTypes);
+        },
+        error: (err) => {
+          console.error('Error loading diets:', err);
+          alert('Failed to load diets. Please try again later.');
+        },
+      });
+    }
   }
+
+
 }
