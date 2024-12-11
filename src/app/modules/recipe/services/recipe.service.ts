@@ -24,8 +24,6 @@ export class RecipeService {
     return this.http.get(this.apiUrl); // Fetch all recipes
   }
 
-  // Fetch a single recipe by ID
-  // Fetch Recipe by ID
   getRecipeById(recipeId: number): Observable<Recipe> {
     return this.http.get<Recipe>(`${this.apiUrl}/${recipeId}`);
   }
@@ -65,6 +63,11 @@ export class RecipeService {
   addReview(review: Review): Observable<Review> {
     return this.http.post<Review>(this.reviewApiUrl, review);
   }
+
+  saveModifiedRecipe(modifiedRecipe: any, userId: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/${userId}/modifications`, modifiedRecipe);
+  }
+
 
 
 }

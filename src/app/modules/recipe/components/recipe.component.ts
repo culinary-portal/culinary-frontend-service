@@ -109,6 +109,10 @@ export class RecipeComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
+  viewSubstituteDetails(ingredientId: number): void {
+    this.router.navigate(['/substitutes/ingredient'], { queryParams: { ingredientId } });
+  }
+
 
   fetchReviews(generalRecipeId: number): void {
     this.recipeService.getReviewsByGeneralRecipeId(generalRecipeId).subscribe({

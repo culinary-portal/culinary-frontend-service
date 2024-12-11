@@ -1,0 +1,29 @@
+<div class="favorites-section">
+  <div class="recipe-container">
+    <h1>Favourite Recipes</h1>
+    <div *ngIf="favoriteRecipes.length === 0" class="no-modified-recipies">
+      No favorite recipes added yet.
+    </div>
+    <div class="recipes-grid">
+      <!-- Iterate through the favorite recipes -->
+      <div *ngFor="let recipe of favoriteRecipes" class="recipe-card">
+        <img
+          [src]="recipe.photoUrl || 'https://via.placeholder.com/100'"
+          alt="{{ recipe.name }}"
+          class="recipe-image"
+        />
+        <div class="recipe-info">
+          <h3>
+            <!-- Use either (click) or [routerLink], not both -->
+            <a (click)="viewRecipeDetails(recipe.generalRecipeId)" class="recipe-link">
+              {{ recipe.name }}
+            </a>
+          </h3>
+        </div>
+        <button class="remove-btn" (click)="removeFavoriteRecipe(recipe.generalRecipeId)">
+          Remove
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
