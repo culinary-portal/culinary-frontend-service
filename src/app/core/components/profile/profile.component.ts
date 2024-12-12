@@ -23,7 +23,6 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     if (!this.authService.isLoggedIn()) {
-      // Redirect to login if not logged in
       this.router.navigate(['/login']);
       return;
     }

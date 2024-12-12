@@ -107,6 +107,8 @@ import { Ingredient } from "../../../ingredient/ingredient";
 import { BigModel } from "src/app/modules/substitute/components/bigModel";
 import { Router } from "@angular/router";
 import {UserDetailsDTO} from "../../../user/model/user-details";
+import {UserService} from "../../../user/services/user.service";
+import {AuthService} from "../../../../shared/services/auth/auth.service";
 
 @Component({
   selector: 'app-substitutes',
@@ -119,12 +121,16 @@ export class SubstitutesComponent implements OnInit {
   activeSubstituteId: number | null = null;
   newModifiedRecipe!: GeneralRecipeDetails; // Store the modified recipe
   user!: UserDetailsDTO;
+  error: string | null = null;
+  selectedSubstitutes: { [ingredientId: number]: BigModel[] } = {};
 
   constructor(
     private route: ActivatedRoute,
     protected substitutesService: SubstitutesService,
     private recipeService: RecipeService,
-    private router: Router
+    private router: Router,
+    private userService: UserService,
+    private authService: AuthService,
   ) {}
 
   ngOnInit(): void {
@@ -133,6 +139,28 @@ export class SubstitutesComponent implements OnInit {
       this.loadRecipe(+recipeId);
     } else {
       console.error('Recipe ID is missing in the route parameters.');
+    }
+
+    if (!this.authService.isLoggedIn()) {
+      // Redirect to login if not logged in
+      this.router.navigate(['/login']);
+      return;
+    }
+    const userDetails = this.authService.getUserDetails();
+    if (userDetails?.id) {
+      this.userService.getUserDetails(userDetails.id).subscribe({
+        next: (userDetails) => {
+          this.user = userDetails;
+        },
+        error: (err) => {
+          this.error = 'Failed to load user details.';
+          console.error(err);
+        },
+      });
+    } else {
+      // Handle case where userDetails is null or id is missing
+      this.error = 'User ID is missing. Please log in again.';
+      this.authService.logout();
     }
   }
 
@@ -216,15 +244,56 @@ export class SubstitutesComponent implements OnInit {
   }
 
   /**
-   * Save the modified recipe and navigate to the modified recipes page.
+   * Save the modified recipe with selected substitutes.
    */
   saveModifiedRecipe(): void {
-    if (!this.newModifiedRecipe) {
-      console.error('No modified recipe to save.');
+    if (!this.generalRecipe) {
+      console.error('No recipe to modify.');
       return;
     }
 
-    this.recipeService.saveModifiedRecipe(this.newModifiedRecipe,user).subscribe({
+    // Step 1: Clone the existing recipe
+    this.newModifiedRecipe = JSON.parse(JSON.stringify(this.generalRecipe));
+
+    // Step 2: Apply selected substitutes
+    if (this.newModifiedRecipe.baseRecipe.contains) {
+      this.newModifiedRecipe.baseRecipe.contains = this.newModifiedRecipe.baseRecipe.contains.map((ingredient) => {
+        const selectedSubstitute = this.selectedSubstitutes[ingredient.ingredient.ingredientId];
+        if (selectedSubstitute && selectedSubstitute.length > 0) {
+          return {
+            ...ingredient,
+            ingredient: {
+              ...ingredient.ingredient,
+              ingredientId: selectedSubstitute[0].substituteId, // Use the first substitute for simplicity
+            },
+          };
+        }
+        return ingredient;
+      });
+    }
+
+    // Validate that user ID exists
+    if (!this.user || !this.user.id) {
+      console.error('User ID is missing. Unable to save modified recipe.');
+      return;
+    }
+
+    // Step 3: Save the modified recipe
+    const payload = {
+      name: this.newModifiedRecipe.name,
+      description: this.newModifiedRecipe.description,
+      dietType: this.newModifiedRecipe.baseRecipe.dietType,
+      generalRecipeId: this.newModifiedRecipe.generalRecipeId,
+      contains: this.newModifiedRecipe.baseRecipe.contains.map((ingredient) => ({
+        containsId: this.newModifiedRecipe.baseRecipe.contains.,
+        amount: ingredient.amount,
+        measure: ingredient.measure,
+        recipeId: ingredient.recipeId,
+        ingredientId: ingredient.ingredient.ingredientId,
+      })),
+    };
+
+    this.recipeService.saveModifiedRecipe(payload, this.user.id).subscribe({
       next: (response) => {
         console.log('Modified recipe saved successfully:', response);
         this.router.navigate(['/modified-recipes'], { queryParams: { recipeId: response.id } });
@@ -233,20 +302,9 @@ export class SubstitutesComponent implements OnInit {
     });
   }
 
-  /**
-   * Display the modified recipe details in the UI.
-   */
-  displayModifiedRecipe(): void {
-    if (!this.newModifiedRecipe) {
-      console.error('No modified recipe to display.');
-      return;
-    }
-
-    console.log('Modified Recipe:', this.newModifiedRecipe);
-    // Add logic to bind the modified recipe to the UI, such as updating a view model or state
-  }
-
   protected readonly Object = Object;
 }
+
+
 
 
