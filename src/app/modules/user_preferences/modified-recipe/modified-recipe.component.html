@@ -1,29 +1,62 @@
+<!--
 <div class="favorites-section">
   <div class="recipe-container">
     <h1>Favourite Recipes</h1>
-    <div *ngIf="favoriteRecipes.length === 0" class="no-modified-recipies">
+    &lt;!&ndash; Display a message if there are no favorite recipes &ndash;&gt;
+    <div *ngIf="modifiedRecipes.length === 0" class="no-recipes-message">
       No favorite recipes added yet.
     </div>
     <div class="recipes-grid">
-      <!-- Iterate through the favorite recipes -->
-      <div *ngFor="let recipe of favoriteRecipes" class="recipe-card">
+      &lt;!&ndash; Iterate through the favorite recipes &ndash;&gt;
+      <div *ngFor="let recipe of modifiedRecipes" class="recipe-card">
         <img
-          [src]="recipe.photoUrl || 'https://via.placeholder.com/100'"
+          [src]="this.generalRecipe?.photoUrl|| 'https://via.placeholder.com/100'"
           alt="{{ recipe.name }}"
           class="recipe-image"
         />
         <div class="recipe-info">
           <h3>
-            <!-- Use either (click) or [routerLink], not both -->
-            <a (click)="viewRecipeDetails(recipe.generalRecipeId)" class="recipe-link">
+            &lt;!&ndash; Use either (click) or [routerLink], not both &ndash;&gt;
+            <a (click)="viewRecipeDetails(recipe.recipeId)" class="recipe-link">
               {{ recipe.name }}
             </a>
           </h3>
         </div>
-        <button class="remove-btn" (click)="removeFavoriteRecipe(recipe.generalRecipeId)">
+        &lt;!&ndash;<button class="remove-btn" (click)="removeFavoriteRecipe(recipe.generalRecipeId)">
           Remove
-        </button>
+        </button>&ndash;&gt;
       </div>
     </div>
   </div>
 </div>
+-->
+  <h2>Modified Recipes</h2>
+  <table>
+    <thead>
+    <tr>
+      <th>Photo</th>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Calories</th>
+      <th>Protein (g)</th>
+      <th>Fat (g)</th>
+      <th>Carbs (g)</th>
+      <th>Meal Type</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let recipe of generalRecipes">
+      <td>
+        <img [src]="recipe.photoUrl" alt="{{ recipe.name }}" width="50" height="50" />
+      </td>
+      <td>{{ recipe.name }}</td>
+      <td>{{ recipe.description }}</td>
+      <td>{{ recipe.calories }}</td>
+      <td>{{ recipe.protein }}</td>
+      <td>{{ recipe.fat }}</td>
+      <td>{{ recipe.carbohydrate }}</td>
+      <td>{{ recipe.mealType }}</td>
+    </tr>
+    </tbody>
+  </table>
+

@@ -49,7 +49,7 @@ import { ModifiedRecipeComponent } from './modules/user_preferences/modified-rec
     UserFavDietsComponent,
     SettingsComponent,
     SubstitutesComponent,
-    ModifiedRecipeComponent
+    ModifiedRecipeComponent,
   ],
   imports: [
     BrowserModule,

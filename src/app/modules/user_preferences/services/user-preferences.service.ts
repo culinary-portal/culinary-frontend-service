@@ -76,10 +76,6 @@ export class UserPreferencesService {
     return this.http.get(`${this.baseUrl}/recipes/${userId}/modifications`);
   }
 
-  // Save a modified recipe for a user
-  saveModifiedRecipe(userId: number, recipe: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/recipes/${userId}/modifications`, recipe);
-  }
 
   // Delete a modified recipe
   deleteModifiedRecipe(userId: number, recipeId: number): Observable<any> {
