@@ -54,9 +54,11 @@
 
   <div class="ingredients-container">
     <h2>Ingredients</h2>
-    <ul>
-      <li *ngFor="let ingredient of generalRecipe?.baseRecipe?.contains">
+    <div>
+      <ul *ngFor="let ingredient of generalRecipe?.baseRecipe?.contains">
         <strong>{{ ingredient.amount }} {{ ingredient.measure }} of {{ ingredient.ingredient.name }}</strong>
+      </ul>
+    </div>
 
     <div *ngIf="generalRecipe">
         <h2>{{ generalRecipe.name }}</h2>
@@ -79,3 +81,5 @@
           </ng-template>
         </div>
     </div>
+  </div>
+</div>
