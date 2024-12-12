@@ -5,6 +5,7 @@ import { AuthService } from '../../shared/services/auth/auth.service';
 import { UserPreferencesService } from '../user_preferences/services/user-preferences.service';
 import { Recipe } from '../recipe/model/recipe';
 import { GeneralRecipeDetails } from '../generalrecipe/model/general-recipe-details';
+import {Contains} from "../contains/model/contains";
 
 export interface JoinedRecipeDetails {
   generalRecipe: GeneralRecipeDetails;
