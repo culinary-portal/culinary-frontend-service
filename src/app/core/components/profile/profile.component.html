@@ -3,7 +3,7 @@
 
 <div *ngIf="!isLoading && user">
   <div class="profile-header">
-    <img [src]="user.photoUrl" alt="User Photo" class="profile-pic" />
+    <img [src]="user.photoUrl === 'N/A' ? 'assets/images/default-avatar.jpg' : user.photoUrl" alt="User Photo" class="profile-pic" />
     <h1>{{ user.userName }}</h1>
     <p>Email: {{ user.email }}</p>
     <p>Birthdate: {{ user.birthdate | date }}</p>
