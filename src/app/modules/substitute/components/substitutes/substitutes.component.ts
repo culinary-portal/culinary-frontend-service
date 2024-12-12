@@ -39,7 +39,7 @@ export class SubstitutesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const recipeId = this.route.snapshot.queryParamMap.get('ingredientId');
+    const recipeId = this.route.snapshot.queryParamMap.get('recipeID');
     if (recipeId) {
       this.loadRecipe(+recipeId);
     } else {
@@ -120,34 +120,6 @@ export class SubstitutesComponent implements OnInit {
     this.activeSubstituteId = ingredientId;
     this.router.navigate(['/substitutes/ingredient'], {queryParams: {ingredientId}});
   }
-
-  /**
-   * Copy the existing recipe and modify the contains list.
-   */
-
-  /*  modifyRecipe(substitutes: { [ingredientId: number]: BigModel }): void {
-      if (!this.generalRecipe) {
-        console.error('No recipe to modify.');
-        return;
-      }
-
-      // Step 1: Clone the existing recipe
-      this.newModifiedRecipe = JSON.parse(JSON.stringify(this.generalRecipe));
-
-      // Step 2: Modify the contains list based on substitutes
-      if (this.newModifiedRecipe.baseRecipe.contains) {
-        this.newModifiedRecipe.baseRecipe.contains = this.newModifiedRecipe.baseRecipe.contains.map((ingredient) => {
-          const substitute = substitutes[ingredient.ingredient.ingredientId];
-          if (substitute) {
-            return {
-              ...ingredient,
-              ingredient: { ...ingredient.ingredient, ingredientId: substitute.substituteId },
-            };
-          }
-          return ingredient;
-        });
-      }
-    }*/
 
   modifyRecipe(ingredientId: number, substitute: BigModel): void {
     if (!this.generalRecipe) {
@@ -233,6 +205,7 @@ export class SubstitutesComponent implements OnInit {
         this.isSaving = false; // Reset the flag after failure
       },
     });
+
   }
 }
 

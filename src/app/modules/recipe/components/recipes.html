@@ -36,7 +36,7 @@
         <li *ngFor="let ingredient of generalRecipe?.baseRecipe?.contains">
           <!--{{ ingredient.amount /* * (Number(ingredient.measure)) */}} grams of {{ ingredient.ingredient.name }}-->
          {{ingredient.ingredient.ingredientId}} {{ ingredient.amount }} grams of {{ ingredient.ingredient.name }}
-          <button *ngIf="hasSubstitute(ingredient.ingredient.ingredientId)" type="button" class="circular-button" (click)="viewSubstituteDetails(ingredient.ingredient.ingredientId)">>
+          <button *ngIf="hasSubstitute(ingredient.ingredient.ingredientId)" type="button" class="circular-button" (click)="viewSubstituteDetails(generalRecipe?.generalRecipeId)">>
             <i class="fa fa-arrow-right"></i> <!-- Font Awesome arrow -->
           </button>
         </li>
