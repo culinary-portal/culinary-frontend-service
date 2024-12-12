@@ -92,6 +92,16 @@ export class GeneralRecipeListComponent implements OnInit {
       });
   }
 
+  filterRecipes(searchTerm: string) {
+    if (!searchTerm) {
+      this.generalRecipes = [...this.generalRecipes];
+    } else {
+      this.generalRecipes = this.generalRecipes.filter(recipe =>
+        recipe.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+  }
+
   fetchRecipes(): void {
     this.isLoading = true;
     const filters = {

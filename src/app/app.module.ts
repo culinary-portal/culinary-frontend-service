@@ -10,14 +10,11 @@ import { RegisterComponent } from './core/components/register/register.component
 import { HomeComponent } from './core/components/home/home.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Page404Component } from './core/components/page404/page404.component';
-import { SearchresultComponent } from './core/components/searchresult/searchresult.component';
-import { SearchComponent } from './core/layout/components/header/search/search.component';
 import { AuthLoggingInterceptorService } from './shared/services/auth/authinterceptor.service';
 import { SharedModule } from './shared/shared.module';
 import { TimeOfTheDayComponent } from './core/components/time-of-the-day/time-of-the-day.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CustomAlertComponent } from './core/custom-alert/custom-alert.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import {NgOptimizedImage} from "@angular/common";
 import { RecipeComponent } from './modules/recipe/components/recipe.component';
@@ -29,6 +26,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import { SubstitutesComponent } from './modules/substitute/components/substitutes/substitutes.component';
 import { ModifiedRecipeComponent } from './modules/user_preferences/modified-recipe/modified-recipe.component';
+import { SearchBarComponent } from './core/components/searchresult/search-bar/search-bar.component';
 
 @NgModule({
   declarations: [
@@ -39,17 +37,16 @@ import { ModifiedRecipeComponent } from './modules/user_preferences/modified-rec
     RegisterComponent,
     HomeComponent,
     Page404Component,
-    SearchresultComponent,
-    SearchComponent,
+    SearchBarComponent,
     TimeOfTheDayComponent,
-    CustomAlertComponent,
     RecipeComponent,
     ProfileComponent,
     UserFavRecipesComponent,
     UserFavDietsComponent,
     SettingsComponent,
     SubstitutesComponent,
-    ModifiedRecipeComponent
+    ModifiedRecipeComponent,
+    SearchBarComponent
   ],
   imports: [
     BrowserModule,
@@ -72,6 +69,9 @@ import { ModifiedRecipeComponent } from './modules/user_preferences/modified-rec
       useClass: AuthLoggingInterceptorService,
       multi: true
     }
+  ],
+  exports: [
+    SearchBarComponent
   ],
   bootstrap: [AppComponent]
 })

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
-import {AlertService} from "../../services/alert.service";
 
 
 @Component({
@@ -17,7 +16,6 @@ export class LoginComponent {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private alertService: AlertService
   ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -27,7 +25,7 @@ export class LoginComponent {
 
   onSubmit() {
     if (this.loginForm.invalid) {
-      this.alertService.error('Please fill out the form correctly.');
+      alert('Please fill out the form correctly.');
       return;
     }
 
@@ -35,12 +33,12 @@ export class LoginComponent {
 
     this.authService.login({ email, password }).subscribe({
       next: (response) => {
-        this.alertService.info('Login successful.');
+        alert('Login successful.');
         this.loginForm.reset();
       },
       error: (err) => {
         console.error('Login failed', err);
-        this.alertService.error('Invalid credentials! Please try again.');
+        alert('Invalid credentials! Please try again.');
       }
     });
   }
