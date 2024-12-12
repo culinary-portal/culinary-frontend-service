@@ -51,24 +51,6 @@ export class UserFavDietsComponent implements OnInit {
     );
   }
 
-  /*loadAvailableDiets(): void {
-    this.userPreferencesService.getAllDiets().subscribe(
-      /!*(data: Diet[]) => {
-        this.availableDiets = data;
-      },*!/
-      (data: Diet[]) => {
-        this.availableDiets = data.map((diet) => ({
-          ...diet,
-          icon: this.getDietIcon(diet.dietType), // Assign icon
-        }));
-      },
-      (error: any) => {
-        console.error('Error fetching available diets:', error);
-        alert('Failed to load available diets. Please try again later.');
-      }
-    );
-  }*/
-
   loadAvailableDiets(): void {
     this.userPreferencesService.getAllDiets().subscribe(
       (data: Diet[]) => {

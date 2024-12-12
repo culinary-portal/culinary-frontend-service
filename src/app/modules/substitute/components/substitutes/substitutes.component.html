@@ -1,85 +1,54 @@
-<!--<div class="recipe-container">
-  <h1 class="recipe-title">{{ generalRecipe?.name }}</h1>
-
-  &lt;!&ndash; Recipe Image &ndash;&gt;
-  <div class="recipe-image-container">
-    <div class="image-box">
-      <img [src]="generalRecipe?.photoUrl" alt="{{ generalRecipe?.name }}" />
-    </div>
-  </div>
-
-  &lt;!&ndash; Nutrition Information &ndash;&gt;
-  <div class="nutrition-container">
-    <div class="nutrition-info">
-      <span>kcal: {{ generalRecipe?.calories }}</span>
-      <span>protein: {{ generalRecipe?.protein }} g</span>
-      <span>fat: {{ generalRecipe?.fat }} g</span>
-      <span>carbs: {{ generalRecipe?.carbohydrate }} g</span>
-    </div>
-  </div>
-
-  &lt;!&ndash; Ingredients List and Substitutes &ndash;&gt;
-  <div class="ingredients-container">
-    <h2>Ingredients</h2>
-    <ul>
-      <li *ngFor="let ingredient of generalRecipe?.baseRecipe?.contains">
-        <strong>{{ ingredient.amount }} {{ ingredient.measure }} of {{ ingredient.ingredient.name }}</strong>
-
-        &lt;!&ndash; Substitutes &ndash;&gt;
-        <ul>
-          <li *ngFor="let substitute of substitutesMap[0]|| []">
-            Substitute: {{ substitute.ingredient2_id }} (Proportion: {{ substitute.proportion_i1_i2 }})
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </div>-->
 <div class="recipe-container">
+  <!-- Recipe Title -->
   <h1 class="recipe-title">{{ generalRecipe?.name }}</h1>
 
-  <div class="recipe-image-container">
-    <div class="image-box">
-      <img [src]="generalRecipe?.photoUrl" alt="{{ generalRecipe?.name }}" />
-    </div>
-  </div>
-
-  <div class="nutrition-container">
-    <div class="nutrition-info">
-      <span>kcal: {{ generalRecipe?.calories }}</span>
-      <span>protein: {{ generalRecipe?.protein }} g</span>
-      <span>fat: {{ generalRecipe?.fat }} g</span>
-      <span>carbs: {{ generalRecipe?.carbohydrate }} g</span>
-    </div>
-  </div>
-
-  <div class="ingredients-container">
-    <h2>Ingredients</h2>
-    <div>
-      <ul *ngFor="let ingredient of generalRecipe?.baseRecipe?.contains">
-        <strong>{{ ingredient.amount }} {{ ingredient.measure }} of {{ ingredient.ingredient.name }}</strong>
+  <!-- Main Layout -->
+  <div class="recipe-main-layout">
+    <!-- Left: Ingredients -->
+    <div class="ingredients-container">
+      <h2>Ingredients</h2>
+      <ul>
+        <li *ngFor="let ingredient of generalRecipe?.baseRecipe?.contains" class="ingredient-item">
+          <span>
+            <strong>{{ ingredient.amount }}</strong> {{ ingredient.measure }} of <strong>{{ ingredient.ingredient.name }}</strong>
+          </span>
+          <button
+            *ngIf="substitutesMap[ingredient.ingredient.ingredientId]?.length"
+            type="button"
+            class="circular-button"
+            (click)="viewSubstituteDetails(ingredient.ingredient.ingredientId)"
+          >
+            <i class="fa fa-arrow-right"></i>
+          </button>
+        </li>
       </ul>
     </div>
 
-    <div *ngIf="generalRecipe">
-        <h2>{{ generalRecipe.name }}</h2>
-        <div *ngFor="let ingredient of generalRecipe.baseRecipe.contains">
-          <h3>Ingredient: {{ ingredient.ingredient.name }}</h3>
-
-          <div *ngFor="let ingredientId of Object.keys(substitutesMap)">
-            <h4>Substitutes:</h4>
-            <ul>
-              <li *ngFor="let sub of substitutesMap[ingredient.ingredient.ingredientId]">
-                Substitute ID: {{ sub.substituteId }} <br />
-                Ingredient 1: {{ sub.ingredient1?.name || 'Unknown' }} <br />
-                Ingredient 2: {{ sub.ingredient2?.name || 'Unknown' }} <br />
-                Proportion: {{ sub.proportionI1I2 }}
-              </li>
-            </ul>
-          </div>
-          <ng-template #noSubstitutes>
-            <p>No substitutes available for this ingredient.</p>
-          </ng-template>
-        </div>
+    <!-- Right: Substitutes -->
+    <div class="substitute-container">
+      <h2>Substitutes</h2>
+      <div *ngIf="activeSubstituteId">
+        <ul class="substitute-list">
+          <li
+            *ngFor="let substitute of substitutesMap[activeSubstituteId]"
+            class="substitute-item"
+          >
+            <button class="substitute-button">
+              {{ substitute.ingredient2?.name || substitute.ingredient1?.name }}
+            </button>
+          </li>
+        </ul>
+      </div>
+      <div *ngIf="!activeSubstituteId" class="placeholder">
+        <p>Select an ingredient to see substitutes</p>
+      </div>
     </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <button type="button" class="remember-button">
+      Remember my configuration
+    </button>
   </div>
 </div>
