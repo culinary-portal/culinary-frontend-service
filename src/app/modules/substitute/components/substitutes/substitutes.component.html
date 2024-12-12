@@ -94,7 +94,7 @@
                 type="radio"
                 name="substitute-{{ activeSubstituteId }}"
                 [value]="substitute"
-                (change)="saveModifiedRecipe()"
+                (change)="modifyRecipe(activeSubstituteId,substitute)"
               />
               {{ substitute.ingredient2?.name || substitute.ingredient1?.name }}
             </label>
