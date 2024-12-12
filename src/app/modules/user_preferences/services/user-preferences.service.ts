@@ -7,6 +7,8 @@ import { UserDetailsDTO } from 'src/app/modules/user/model/user-details'
 import {RecipeComponent} from "../../recipe/components/recipe.component";
 import {RecipeService} from "src/app/modules/recipe/services/recipe.service"
 import {Diet} from 'src/app/modules/diet/model/diet'
+import {Recipe} from "../../recipe/model/recipe";
+import {BaseRecipe} from "../../recipe/model/base-recipe";
 
 @Injectable({
   providedIn: 'root'
@@ -80,6 +82,9 @@ export class UserPreferencesService {
   // Delete a modified recipe
   deleteModifiedRecipe(userId: number, recipeId: number): Observable<any> {
     return this.http.delete(`${this.baseUrl}/recipes/${userId}/modifications/${recipeId}`);
+  }
+  getRecipeById(recipeId: number): Observable<BaseRecipe> {
+    return this.http.get<BaseRecipe>(`${environment.apiUrl}/api/recipes/${recipeId}`);
   }
 }
 

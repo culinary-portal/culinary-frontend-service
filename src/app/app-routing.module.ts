@@ -14,6 +14,7 @@ import { UserFavDietsComponent } from './modules/user_preferences/user-fav-diets
 import{SettingsComponent} from "./modules/user_preferences/settings/settings.component";
 import {SubstitutesComponent} from "./modules/substitute/components/substitutes/substitutes.component";
 import {ModifiedRecipeComponent} from "./modules/user_preferences/modified-recipe/modified-recipe.component"
+import {ModifiedViewComponent} from "./modules/modified-view/modified-view.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full'},
@@ -34,6 +35,7 @@ const routes: Routes = [
   { path: 'favorite-diets', component: UserFavDietsComponent },
   { path:'settings',component: SettingsComponent},
   {path: 'my-modifications', component:ModifiedRecipeComponent},
+  {path: 'modify_recipes/:id', component:ModifiedViewComponent},
   { path: 'substitutes/ingredient', component: SubstitutesComponent }, // New route
   { path: '', redirectTo: '/general-recipes', pathMatch: 'full'},
   { path: '**', component: Page404Component, data: {message: 'Oops... This is a Bad request'}},
