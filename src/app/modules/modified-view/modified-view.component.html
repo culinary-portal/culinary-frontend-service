@@ -47,7 +47,8 @@
   <img [src]="joinedRecipe.generalRecipe.photoUrl" alt="Recipe Image" />
   <p>{{ joinedRecipe.generalRecipe.description }}</p>
   <p><strong>Meal Type:</strong> {{ joinedRecipe.generalRecipe.mealType }}</p>
-  <p><strong>Steps:</strong> {{ joinedRecipe.generalRecipe.rating }}</p>
+  <p><strong>Steps:</strong> {{ joinedRecipe.generalRecipe.description }}</p>
+  <p><strong>Steps:</strong> {{ joinedRecipe.baseRecipe }}</p>
 </div>
 <div *ngIf="!loading && errorMessage" class="error">
   {{ errorMessage }}

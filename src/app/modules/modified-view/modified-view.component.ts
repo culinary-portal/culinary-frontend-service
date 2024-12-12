@@ -6,10 +6,12 @@ import { UserPreferencesService } from '../user_preferences/services/user-prefer
 import { Recipe } from '../recipe/model/recipe';
 import { GeneralRecipeDetails } from '../generalrecipe/model/general-recipe-details';
 import {Contains} from "../contains/model/contains";
+import {Ingredient} from "../ingredient/ingredient";
+import {BaseRecipe} from "../recipe/model/base-recipe";
 
 export interface JoinedRecipeDetails {
   generalRecipe: GeneralRecipeDetails;
-  baseRecipe: Recipe;
+  baseRecipe: BaseRecipe;
 }
 
 @Component({
@@ -54,21 +56,49 @@ export class ModifiedViewComponent implements OnInit {
   // Fetch Recipe details and directly use the embedded GeneralRecipeDetails
   fetchRecipeDetails(recipeId: number): void {
     this.loading = true;
+    this.getRecipeById(recipeId)
+      .then((recipe) => this.getGeneralRecipeAndCombine(recipe))
+      .catch((error) => {
+        console.error('Error:', error);
+        this.errorMessage = error.message;
+        this.loading = false;
+      });
+  }
 
-    this.recipeService.getRecipeById(recipeId).subscribe({
-      next: (recipe: Recipe) => {
-        // Combine Recipe and its embedded GeneralRecipeDetails
+// Fetch the Recipe by ID
+  private getRecipeById(recipeId: number): Promise<BaseRecipe> {
+    return new Promise((resolve, reject) => {
+      this.userPreferencesService.getRecipeById(recipeId).subscribe({
+        next: (recipe: BaseRecipe) => resolve(recipe),
+        error: (err) => reject(new Error(`Failed to load Recipe details: ${err.message}`)),
+      });
+    });
+  }
+
+// Fetch GeneralRecipeDetails and combine with the BaseRecipe
+  private getGeneralRecipeAndCombine(recipe: BaseRecipe): void {
+    this.getGeneralRecipeById(recipe.generalRecipeId)
+      .then((generalRecipe) => {
         this.joinedRecipe = {
           baseRecipe: recipe,
-          generalRecipe: recipe.generalRecipe,
+          generalRecipe: generalRecipe,
         };
         this.loading = false;
-      },
-      error: (err) => {
-        console.error('Error fetching Recipe:', err);
-        this.errorMessage = `Failed to load Recipe details: ${err.message}`;
+      })
+      .catch((error) => {
+        console.error('Error fetching GeneralRecipeDetails:', error);
+        this.errorMessage = error.message;
         this.loading = false;
-      },
+      });
+  }
+
+// Fetch the GeneralRecipeDetails by ID
+  private getGeneralRecipeById(generalRecipeId: number): Promise<GeneralRecipeDetails> {
+    return new Promise((resolve, reject) => {
+      this.recipeService.getGeneralRecipeById(generalRecipeId).subscribe({
+        next: (generalRecipe: GeneralRecipeDetails) => resolve(generalRecipe),
+        error: (err) => reject(new Error(`Failed to load General Recipe details: ${err.message}`)),
+      });
     });
   }
 
