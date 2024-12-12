@@ -7,7 +7,8 @@ import { Review } from '../../review/model/review';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import {UserPreferencesService} from "src/app/modules/user_preferences/services/user-preferences.service";
 import { SubstitutesService } from "../../substitute/services/substitutes.service";
-import {map, Observable} from "rxjs";
+import {map, Observable, of} from "rxjs";
+import {catchError} from "rxjs/operators";
 
 @Component({
   selector: 'app-recipes',
@@ -187,7 +188,7 @@ export class RecipeComponent implements OnInit {
   }
 
 
-  hasSubstitute(ingredientId: number): Observable<boolean> {
+/*  hasSubstitute(ingredientId: number): Observable<boolean> {
     return this.findSubstitute(ingredientId);
   }
 
@@ -196,6 +197,17 @@ export class RecipeComponent implements OnInit {
       map((result: any) => {
         return Array.isArray(result) && result.length > 0; // Check if substitutes exist
       })
+    );
+  }*/
+
+  hasSubstitute(ingredientId: number): Observable<boolean> {
+    return this.findSubstitute(ingredientId);
+  }
+
+  findSubstitute(ingredientId: number): Observable<boolean> {
+    return this.substitutesService.getSubstitutesForIngredient(ingredientId).pipe(
+      map((result: any) => Array.isArray(result) && result.length == 0), // Check if substitutes exist
+      catchError(() => of(false)) // Handle errors and return false if something goes wrong
     );
   }
 

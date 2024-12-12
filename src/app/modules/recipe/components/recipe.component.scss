@@ -293,14 +293,13 @@ margin-top: 20px; /* Add space above */
   text-decoration: underline;
 }
 
-.circular-button {
+.modify-button {
   background-color: #e89a50;
   border: none;
   color: white;
-  font-size: 0.5em;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
+  width: 80px;
+  height: 25px;
+  border-radius: 10%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
