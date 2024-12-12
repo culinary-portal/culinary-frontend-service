@@ -80,6 +80,7 @@ export class SettingsComponent {
           this.userPService.updateUser(userId, userDetails).subscribe({
             next: (response) => {
               console.log('Response:', response);
+              this.authService.setUserDetails(response);
               this.successMessage = 'Profile updated successfully!';
               this.errorMessage = '';
             },

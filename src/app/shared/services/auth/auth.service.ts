@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { map, tap } from 'rxjs';
+import { BehaviorSubject, map, tap } from 'rxjs';
 import { UserDetailsDTO } from 'src/app/modules/user/model/user-details';
-import {environment} from "../../../../environments/environment";
+import { environment } from '../../../../environments/environment';
 
 interface AuthDTO {
   email: string;
@@ -20,9 +20,15 @@ interface RegisterDTO {
   providedIn: 'root'
 })
 export class AuthService {
-  private userDetails: UserDetailsDTO | null = null;
+  private userDetailsSubject = new BehaviorSubject<UserDetailsDTO | null>(null);
   private baseApiUrl = environment.apiUrl;
-  constructor(private http: HttpClient, private router: Router) {}
+
+  constructor(private http: HttpClient, private router: Router) {
+    const storedUser = localStorage.getItem('userDetails');
+    if (storedUser) {
+      this.userDetailsSubject.next(JSON.parse(storedUser));
+    }
+  }
 
   register(registerDTO: RegisterDTO) {
     return this.http.post(`${this.baseApiUrl}/api/auth/register`, registerDTO, { observe: 'response' }).pipe(
@@ -55,25 +61,22 @@ export class AuthService {
     return !!localStorage.getItem('userDetails');
   }
 
-  private setUserDetails(userDetails: UserDetailsDTO) {
-    this.userDetails = userDetails;
+  getUserDetails() {
+    return this.userDetailsSubject.value;
+  }
+
+  getUserDetailsObservable() {
+    return this.userDetailsSubject.asObservable();
+  }
+
+
+  setUserDetails(userDetails: UserDetailsDTO) {
+    this.userDetailsSubject.next(userDetails);
     localStorage.setItem('userDetails', JSON.stringify(userDetails));
-    localStorage.setItem('isLogged', 'true');
   }
 
   private clearUserDetails() {
-    this.userDetails = null;
+    this.userDetailsSubject.next(null);
     localStorage.removeItem('userDetails');
-    localStorage.removeItem('isLogged');
-  }
-
-  getUserDetails() {
-    if (!this.userDetails) {
-      const storedUser = localStorage.getItem('userDetails');
-      if (storedUser) {
-        this.userDetails = JSON.parse(storedUser);
-      }
-    }
-    return this.userDetails;
   }
 }
