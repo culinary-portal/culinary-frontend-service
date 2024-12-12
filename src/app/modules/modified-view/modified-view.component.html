@@ -26,9 +26,9 @@
     <div class="ingredients-container">
       <h2>Ingredients</h2>
       <ul>
-        <li *ngFor="let ingredient of joinedRecipe?.baseRecipe?.contains">
-          {{ ingredient.amount * (Number(ingredient.measure)) }} grams of {{ ingredient.ingredient.name }}
-        </li>
+
+         <li *ngFor="let ingredient of joinedRecipe?.generalRecipe?.baseRecipe?.contains">
+           ingredient.amount * (Number(ingredient.measure)) }} grams of {{ ingredient.ingredient.name }}
       </ul>
     </div>
 
