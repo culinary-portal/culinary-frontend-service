@@ -29,6 +29,7 @@ export class RecipeService {
   }
 
   getGeneralRecipeById(generalRecipeId: number): Observable<GeneralRecipeDetails> {
+    console.log('generalid: ', generalRecipeId)
     return this.http.get<GeneralRecipeDetails>(`${environment.apiUrl}/api/general-recipes/${generalRecipeId}`);
   }
   // Create a new recipe
