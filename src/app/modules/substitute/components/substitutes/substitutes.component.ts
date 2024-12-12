@@ -58,8 +58,7 @@ export class SubstitutesComponent implements OnInit {
             next: (substitutes: BigModel[]) => {
               console.log(
                 'Fetched substitutes for ingredient:',
-                ingredient.ingredient.name,
-                substitutes[1]
+                substitutes[0]["substituteId"]
               );
               this.substitutesMap[ingredient.ingredient.ingredientId] = substitutes;
               console.log('Substitutes Map:', this.substitutesMap);
@@ -72,26 +71,5 @@ export class SubstitutesComponent implements OnInit {
     }
   }
 
-
-
-  /*hasSubstitutes(ingredientId: number | undefined): boolean {
-    return !!ingredientId && !!this.substitutesMap[ingredientId]?.length;
-  }*/
-
-
-  /*getSubstitutesForIngredient(ingredientId: number | undefined): { ingredientName: string; proportion: number }[] {
-    if (!ingredientId) {
-      return []; // Return an empty array if ingredientId is undefined
-    }
-    return this.substitutesMap[ingredientId] || []; // Safely return substitutes or an empty array
-  }*/
-
- /* getSubstitutes(ingredientId: number | undefined): { ingredientName: string; proportion: number }[] | null {
-    if (!ingredientId || !this.substitutesMap[ingredientId]) {
-      return null;
-    }
-    return this.substitutesMap[ingredientId];
-  }*/
-
-  protected readonly Object = Object;
+protected readonly Object = Object;
 }

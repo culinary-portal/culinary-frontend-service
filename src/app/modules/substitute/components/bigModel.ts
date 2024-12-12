@@ -2,7 +2,8 @@ import {Ingredient} from "../../ingredient/ingredient";
 import {Substitute} from "../substitute";
 
 export interface BigModel {
-  substitute: Substitute;
-  Ingredient_1: Ingredient;
-  Ingredient_2: Ingredient;
+  substituteId: number;
+  ingredient1: Ingredient;
+  ingredient2: Ingredient;
+  proportionI1I2: number;
 }
