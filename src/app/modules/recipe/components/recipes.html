@@ -1,0 +1,115 @@
+<div class="recipe-container">
+  <!-- Header Section -->
+  <div class="recipe-header">
+    <h1 class="recipe-title">{{ generalRecipe?.name }}</h1>
+  </div>
+
+     <!-- Image Section with White Container -->
+    <div class="recipe-image-container">
+      <div class="image-box">
+        <img [src]="generalRecipe?.photoUrl" alt="{{ generalRecipe?.name }}" />
+      </div>
+    </div>
+
+  <!-- Nutrition Section -->
+  <div class="nutrition-container">
+  <div class="nutrition-info">
+    <span>kcal: {{ generalRecipe?.calories }}</span>
+    <span>protein: {{ generalRecipe?.protein }} g</span>
+    <span>fat: {{ generalRecipe?.fat }} g</span>
+    <span>carbs: {{ generalRecipe?.carbohydrate }} g</span>
+    <button
+      class="like-button"
+      (click)="saveRecipe()"
+      title="Add to Favorites"
+    >
+      <i class="fas fa-heart"></i>
+    </button>
+  </div>
+  </div>
+
+  <!-- Ingredients and Steps Section -->
+  <div class="details-section">
+    <div class="ingredients-container">
+      <h2>Ingredients</h2>
+      <button  type="button" class="modify-button" (click)="viewSubstituteDetails(generalRecipe?.generalRecipeId)">
+       <h1>MODIFY</h1>
+      </button>
+      <ul>
+        <li *ngFor="let ingredient of generalRecipe?.baseRecipe?.contains">
+          {{ ingredient.amount * (Number(ingredient.measure)) }} grams of {{ ingredient.ingredient.name }}
+        </li>
+      </ul>
+    </div>
+
+    <!-- Steps -->
+    <div class="steps-container">
+      <h2>Steps</h2>
+      <p>{{ generalRecipe?.steps }}</p>
+    </div>
+  </div>
+
+  <h2 class="reviews-title">Reviews</h2>
+  <div class="review-container" *ngFor="let review of reviews">
+    <p class="review-user"><strong>User {{ review.userId }}</strong></p>
+    <p class="review-rating">Rating:
+      <ng-container *ngFor="let star of [1, 2, 3, 4, 5]">
+        <i
+          class="fa"
+          [ngClass]="star <= review.rating ? 'fa-star filled-star' : 'fa-star-o'"
+        ></i>
+      </ng-container>
+    </p>
+    <p class="review-opinion">{{ review.opinion }}</p>
+  </div>
+
+
+<ng-template #noReviews>
+  <p>No reviews available. Be the first to add one!</p>
+</ng-template>
+
+  <div class="login-container">
+    <button *ngIf="!isLoggedIn" type="button" class="login-button" (click)="goLogin()">
+      Login
+    </button>
+  </div>
+
+    <!-- Add Review Form -->
+  <div *ngIf="isLoggedIn" class="add-review-form">
+    <h3>Add a Review</h3>
+    <form (ngSubmit)="submitReview()">
+      <!-- Radio Button Rating System -->
+      <div class="rating">
+        <label *ngFor="let rate of [1, 2, 3, 4, 5]">
+          <input
+            type="radio"
+            name="rating"
+            [value]="rate"
+            [(ngModel)]="newReview.rating"
+            required
+          />
+          <span>{{ rate }}</span>
+        </label>
+      </div>
+
+      <!-- Opinion Textarea -->
+      <label for="opinion">Opinion:</label>
+      <textarea
+        id="opinion"
+        [(ngModel)]="newReview.opinion"
+        name="opinion"
+        rows="4"
+        required
+      ></textarea>
+
+      <!-- Submit Button -->
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+<div class="explore-container">
+  <button type="button" class="explore-button" (click)="goBack()">
+    Explore More
+  </button>
+</div>
+</div>

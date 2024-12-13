@@ -20,6 +20,7 @@
 
           <li *ngIf="authService.isLoggedIn()" class="top-nav-menu-item">
             <div class="flex items-center">
+              <a [routerLink]="['/profile']" class="flex items-center">
               <img
                 [src]="(userDetails?.photoUrl && userDetails?.photoUrl !== 'N/A')
                       ? userDetails?.photoUrl
@@ -34,6 +35,7 @@
                 : userDetails?.userName
                 }}
                </span>
+              </a>
               <button (click)="logOut()" class="py-1 flex-col md:flex-row">
                 <i class="fa-solid fa-arrow-right-from-bracket" title="Logout"></i>
                 <span class="text-xs">Logout</span>

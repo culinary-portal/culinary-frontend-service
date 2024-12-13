@@ -1,0 +1,63 @@
+<div class="recipe-container">
+  <!-- Recipe Title -->
+  <h1 class="recipe-title">{{ generalRecipe?.name }}</h1>
+
+  <!-- Main Layout -->
+  <div class="recipe-main-layout">
+    <!-- Left: Ingredients -->
+    <div class="ingredients-container">
+      <h2>Ingredients</h2>
+      <ul>
+        <li *ngFor="let ingredient of generalRecipe?.baseRecipe?.contains" class="ingredient-item">
+          <span>
+            <strong>{{ ingredient.amount }}</strong> {{ ingredient.measure }} of <strong>{{ ingredient.ingredient.name }}</strong>
+          </span>
+          <button
+            *ngIf="substitutesMap[ingredient.ingredient.ingredientId]?.length"
+            type="button"
+            class="circular-button"
+           (click)="viewSubstituteDetails(ingredient.ingredient.ingredientId)">
+            <i class="fa fa-arrow-right"></i>
+          </button>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Right: Substitutes -->
+    <div class="substitute-container">
+      <h2>Substitutes</h2>
+      <div *ngIf="activeSubstituteId">
+        <ul class="substitute-list">
+          <li
+            *ngFor="let substitute of substitutesMap[activeSubstituteId]"
+            class="substitute-item"
+          >
+            <label>
+              <input
+                type="radio"
+                name="substitute-{{ activeSubstituteId }}"
+                [value]="substitute"
+                (change)="modifyRecipe(activeSubstituteId,substitute)"
+              />
+              {{ substitute.ingredient2?.name || substitute.ingredient1?.name }}
+            </label>
+          </li>
+        </ul>
+      </div>
+      <div *ngIf="!activeSubstituteId" class="placeholder">
+        <p>Select an ingredient to see substitutes</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <button
+      type="button"
+      class="remember-button"
+      (click)="saveModifiedRecipe()"
+    >
+      Remember my configuration
+    </button>
+  </div>
+</div>

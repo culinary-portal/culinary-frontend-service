@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MENU } from 'src/app/shared/constant';
 import { AuthService } from 'src/app/shared/services/auth/auth.service';
 import { UserDetailsDTO } from 'src/app/modules/user/model/user-details';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -40,6 +41,7 @@ export class HeaderComponent implements OnInit {
   menuList: { title: string; path: string }[] = MENU;
   isMenu = false;
   userDetails: UserDetailsDTO | null = null;
+  private userSubscription!: Subscription;
 
   constructor(public authService: AuthService) {}
 
@@ -56,9 +58,16 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.authService.isLoggedIn()) {
-      // Fetch user details from AuthService
-      this.userDetails = this.authService.getUserDetails();
+    this.userSubscription = this.authService
+      .getUserDetailsObservable()
+      .subscribe((details) => {
+        this.userDetails = details;
+      });
+  }
+
+  ngOnDestroy() {
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
     }
   }
 }

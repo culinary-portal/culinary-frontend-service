@@ -20,8 +20,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CustomAlertComponent } from './core/custom-alert/custom-alert.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import {NgOptimizedImage} from "@angular/common";
-
-
+import { RecipeComponent } from './modules/recipe/components/recipe.component';
+import { ProfileComponent } from './core/components/profile/profile.component';
+import { UserFavRecipesComponent } from './modules/user_preferences/user-fav-recipes/user-fav-recipes.component';
+import { UserFavDietsComponent } from './modules/user_preferences/user-fav-diets/user-fav-diets.component';
+import { SettingsComponent } from './modules/user_preferences/settings/settings.component';
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import { SubstitutesComponent } from './modules/substitute/components/substitutes/substitutes.component';
+import { ModifiedRecipeComponent } from './modules/user_preferences/modified-recipe/modified-recipe.component';
+import { ModifiedViewComponent } from './modules/modified-view/modified-view.component';
 
 @NgModule({
   declarations: [
@@ -35,20 +43,31 @@ import {NgOptimizedImage} from "@angular/common";
     SearchresultComponent,
     SearchComponent,
     TimeOfTheDayComponent,
-    CustomAlertComponent
+    CustomAlertComponent,
+    RecipeComponent,
+    ProfileComponent,
+    UserFavRecipesComponent,
+    UserFavDietsComponent,
+    SettingsComponent,
+    SubstitutesComponent,
+    ModifiedRecipeComponent,
+    ModifiedViewComponent,
   ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        HttpClientModule,
-        MatDialogModule,
-        FormsModule,
-        ReactiveFormsModule,
-        AppRoutingModule,
-        SharedModule,
-        MatSnackBarModule,
-        NgOptimizedImage
-    ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    MatDialogModule,
+    FormsModule,
+    ReactiveFormsModule,
+    BrowserAnimationsModule,  // Required for Material animations
+    MatPaginatorModule,       // Required for paginator
+    MatTooltipModule,
+    AppRoutingModule,
+    SharedModule,
+    MatSnackBarModule,
+    NgOptimizedImage,
+  ],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,

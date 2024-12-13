@@ -1,0 +1,31 @@
+<div class="favorites-section">
+  <div class="recipe-container">
+    <h1>Modified Recipes</h1>
+    <!-- Display a message if there are no favorite recipes -->
+    <div *ngIf="modifiedRecipes.length === 0" class="no-recipes-message">
+      No favorite recipes added yet.
+    </div>
+    <div class="recipes-grid">
+      <!-- Iterate through the favorite recipes -->
+      <div *ngFor="let recipe of modifiedRecipes" class="recipe-card">
+        <img
+          [src]="recipe.photoUrl || 'https://via.placeholder.com/100'"
+          alt="{{ recipe.baseRecipe.name }}"
+          class="recipe-image"
+        />
+        <div class="recipe-info">
+          <h3>
+            <a (click)="viewRecipeDetails(userId, recipe.baseRecipe.recipeId)" class="recipe-link">
+              {{ recipe.baseRecipe.name }}
+            </a>
+          </h3>
+        </div>
+        <button class="remove-btn" (click)="removeModifiedRecipe(recipe.baseRecipe.recipeId)">
+          Remove
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

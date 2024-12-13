@@ -1,0 +1,48 @@
+
+<div *ngIf="loading">Loading recipe details...</div>
+<!-- Header Section -->
+<div class="recipe-header">
+  <h1 class="recipe-title">{{ modifiedRecipe?.name }}</h1>
+</div>
+
+<!-- Image Section with White Container -->
+<div class="recipe-image-container">
+  <div class="image-box">
+    <img [src]="modifiedRecipe?.photoUrl" alt="{{ modifiedRecipe?.name }}" />
+  </div>
+</div>
+
+<!-- Nutrition Section -->
+<div class="nutrition-container">
+  <div class="nutrition-info">
+    <span>kcal: {{ modifiedRecipe?.calories }}</span>
+    <span>protein: {{ modifiedRecipe?.protein }} g</span>
+    <span>fat: {{ modifiedRecipe?.fat }} g</span>
+    <span>carbs: {{ modifiedRecipe?.carbohydrate }} g</span>
+  </div>
+</div>
+
+<!-- Ingredients and Steps Section -->
+<div class="details-section">
+  <div class="ingredients-container">
+    <h2>Ingredients</h2>
+    <ul>
+      <li *ngFor="let ingredient of modifiedRecipe?.baseRecipe?.contains">
+        {{ ingredient.amount * (Number(ingredient.measure)) }} grams of {{ ingredient.ingredient.name }}
+      </li>
+    </ul>
+  </div>
+
+  <!-- Steps -->
+  <div class="steps-container">
+    <h2>Steps</h2>
+    <p>{{ modifiedRecipe?.steps }}</p>
+  </div>
+</div>
+
+
+<div class="explore-container">
+  <button type="button" class="explore-button" (click)="goBack()">
+    Explore More
+  </button>
+</div>
