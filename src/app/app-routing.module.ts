@@ -35,7 +35,7 @@ const routes: Routes = [
   { path: 'favorite-diets', component: UserFavDietsComponent },
   { path:'settings',component: SettingsComponent},
   {path: 'my-modifications', component:ModifiedRecipeComponent},
-  {path: 'modify_recipes/:id', component:ModifiedViewComponent},
+  {path: 'modify_recipes/:userId/:recipeId', component:ModifiedViewComponent},
   { path: 'substitutes/ingredient', component: SubstitutesComponent }, // New route
   { path: '', redirectTo: '/general-recipes', pathMatch: 'full'},
   { path: '**', component: Page404Component, data: {message: 'Oops... This is a Bad request'}},

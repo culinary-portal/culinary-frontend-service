@@ -75,8 +75,13 @@ export class UserPreferencesService {
 
 
   getModifiedRecipes(userId: number): Observable<any> {
-    return this.http.get(`${this.baseUrl}/recipes/${userId}/modifications`);
+    return this.http.get(`${this.baseUrl}/recipes/${userId}/modificationsDetails`);
   }
+
+  getModifiedRecipesOne(userId: number | null, recipeId: number | null): Observable<any> {
+    return this.http.get(`${this.baseUrl}/recipes/${userId}/modificationsDetails/${recipeId}`);
+  }
+
 
 
   // Delete a modified recipe

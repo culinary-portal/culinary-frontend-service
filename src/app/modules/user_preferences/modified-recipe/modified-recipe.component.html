@@ -2,21 +2,20 @@
   <div class="recipe-container">
     <h1>Modified Recipes</h1>
     <!-- Display a message if there are no favorite recipes -->
-    <div *ngIf="joinedRecipes.length === 0" class="no-recipes-message">
+    <div *ngIf="modifiedRecipes.length === 0" class="no-recipes-message">
       No favorite recipes added yet.
     </div>
     <div class="recipes-grid">
       <!-- Iterate through the favorite recipes -->
-      <div *ngFor="let recipe of joinedRecipes" class="recipe-card">
+      <div *ngFor="let recipe of modifiedRecipes" class="recipe-card">
         <img
-          [src]="recipe.generalRecipe.photoUrl || 'https://via.placeholder.com/100'"
+          [src]="recipe.photoUrl || 'https://via.placeholder.com/100'"
           alt="{{ recipe.baseRecipe.name }}"
           class="recipe-image"
         />
         <div class="recipe-info">
           <h3>
-            <!-- Use either (click) or [routerLink], not both -->
-            <a (click)="viewRecipeDetails(recipe.baseRecipe.recipeId)" class="recipe-link">
+            <a (click)="viewRecipeDetails(userId, recipe.baseRecipe.recipeId)" class="recipe-link">
               {{ recipe.baseRecipe.name }}
             </a>
           </h3>
