@@ -209,6 +209,8 @@ export class SubstitutesComponent implements OnInit {
     });
     this.router.navigate(['/my-modifications'])
   }
+
+  protected readonly Number = Number;
 }
 
 
