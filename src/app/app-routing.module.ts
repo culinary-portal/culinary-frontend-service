@@ -4,7 +4,6 @@ import {HomeComponent} from './core/components/home/home.component';
 import {LoginComponent} from './core/components/login/login.component';
 import {RegisterComponent} from './core/components/register/register.component';
 import {Page404Component} from './core/components/page404/page404.component';
-import {SearchresultComponent} from './core/components/searchresult/searchresult.component';
 import {TimeOfTheDayComponent} from "./core/components/time-of-the-day/time-of-the-day.component";
 import {GeneralRecipeListComponent} from "./modules/generalrecipe/components/general-recipe-list.component";
 import {RecipeComponent} from "./modules/recipe/components/recipe.component";
@@ -28,14 +27,13 @@ const routes: Routes = [
     path: 'general-recipes',
     loadChildren: () => import('./modules/generalrecipe/generalrecipe.module').then(m => m.GeneralRecipeModule)
   },
-  { path: 'products', component: SearchresultComponent},
   { path: 'recipes/:id', component: RecipeComponent },
   { path: 'profile', component: ProfileComponent},
   { path: 'favorite-recipes', component: UserFavRecipesComponent },
   { path: 'favorite-diets', component: UserFavDietsComponent },
   { path:'settings',component: SettingsComponent},
   {path: 'my-modifications', component:ModifiedRecipeComponent},
-  {path: 'modify_recipes/:id', component:ModifiedViewComponent},
+  {path: 'modify_recipes/:userId/:recipeId', component:ModifiedViewComponent},
   { path: 'substitutes/ingredient', component: SubstitutesComponent }, // New route
   { path: '', redirectTo: '/general-recipes', pathMatch: 'full'},
   { path: '**', component: Page404Component, data: {message: 'Oops... This is a Bad request'}},

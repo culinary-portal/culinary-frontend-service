@@ -7,10 +7,6 @@ import { Router } from '@angular/router';
 import { BaseRecipe } from '../../recipe/model/base-recipe';
 import { forkJoin } from 'rxjs';
 
-interface JoinedRecipe {
-  baseRecipe: BaseRecipe;
-  generalRecipe: GeneralRecipeDetails;
-}
 
 @Component({
   selector: 'app-modified-recipe',
@@ -18,7 +14,7 @@ interface JoinedRecipe {
   styleUrls: ['./modified-recipe.component.scss'],
 })
 export class ModifiedRecipeComponent implements OnInit {
-  joinedRecipes: JoinedRecipe[] = []; // Array to store joined data
+  modifiedRecipes: GeneralRecipeDetails[] = [];
   userId: number | null = null;
   loading: boolean = false;
   error: string | null = null;
@@ -52,10 +48,10 @@ export class ModifiedRecipeComponent implements OnInit {
 
     // Step 1: Fetch modified recipes
     this.userPreferencesService.getModifiedRecipes(this.userId).subscribe({
-      next: (baseRecipes: BaseRecipe[]) => {
-        if (baseRecipes.length > 0) {
+      next: (modified: GeneralRecipeDetails[]) => {
+        if (modified.length > 0) {
           // Step 2: Fetch GeneralRecipeDetails for all base recipes
-          this.fetchAndJoinRecipes(baseRecipes);
+          this.modifiedRecipes = modified;
         } else {
           this.loading = false;
           this.error = 'No modified recipes found for the user.';
@@ -69,34 +65,9 @@ export class ModifiedRecipeComponent implements OnInit {
     });
   }
 
-  fetchAndJoinRecipes(baseRecipes: BaseRecipe[]): void {
-    const requests = baseRecipes.map((baseRecipe) =>
-      this.recipeService.getGeneralRecipeById(baseRecipe.generalRecipeId)
-    );
 
-    forkJoin(requests).subscribe({
-      next: (generalRecipes: GeneralRecipeDetails[]) => {
-        // Join BaseRecipe with GeneralRecipeDetails
-        this.joinedRecipes = baseRecipes.map((baseRecipe) => {
-          const generalRecipe = generalRecipes.find(
-            (gr) => gr.generalRecipeId === baseRecipe.generalRecipeId
-          );
-          return { baseRecipe, generalRecipe: generalRecipe! }; // Ensure the match exists
-        });
-
-        this.loading = false;
-      },
-      error: (err) => {
-        this.loading = false;
-        this.error = 'Error fetching general recipes: ' + err.message;
-        console.error(this.error, err);
-      },
-    });
-  }
-
-
-  viewRecipeDetails(id: number): void {
-    this.router.navigate(['/modify_recipes', id]); // Navigates to the details screen
+  viewRecipeDetails(userId: number | null, recipeId: number): void {
+    this.router.navigate(['/modify_recipes', userId, recipeId]); // Navigates to the details screen
   }
 
   removeModifiedRecipe(recipeId: number): void {
@@ -112,7 +83,7 @@ export class ModifiedRecipeComponent implements OnInit {
       next: () => {
         console.log('Recipe with ID ${recipeId} removed successfully.');
         // Update the local joinedRecipes array
-        this.joinedRecipes = this.joinedRecipes.filter(
+        this.modifiedRecipes = this.modifiedRecipes.filter(
           (recipe) => recipe.baseRecipe.recipeId !== recipeId
         );
         alert('The recipe has been successfully removed from your favorites.');

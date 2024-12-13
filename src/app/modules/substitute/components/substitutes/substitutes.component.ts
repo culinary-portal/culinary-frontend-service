@@ -207,7 +207,7 @@ export class SubstitutesComponent implements OnInit {
         this.isSaving = false; // Reset the flag after failure
       },
     });
-
+    this.router.navigate(['/my-modifications'])
   }
 }
 

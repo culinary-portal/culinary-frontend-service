@@ -1,79 +1,48 @@
-<div class="recipes-container">
-  <!-- Loading Indicator -->
-  <div *ngIf="loading">Loading...</div>
 
-  <!-- Error Message -->
-  <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+<div *ngIf="loading">Loading recipe details...</div>
+<!-- Header Section -->
+<div class="recipe-header">
+  <h1 class="recipe-title">{{ modifiedRecipe?.name }}</h1>
+</div>
 
-  <!-- Display Selected Recipe -->
-  <div *ngIf="selectedRecipe" class="recipe-detail">
-    <!-- Back Button -->
-    <button (click)="deselectRecipe()">Back to Recipes</button>
+<!-- Image Section with White Container -->
+<div class="recipe-image-container">
+  <div class="image-box">
+    <img [src]="modifiedRecipe?.photoUrl" alt="{{ modifiedRecipe?.name }}" />
+  </div>
+</div>
 
-    <!-- Header Section -->
-    <div class="recipe-header">
-      <h1 class="recipe-title">{{ selectedRecipe.name }}</h1>
-      <p class="recipe-description">{{ selectedRecipe.description }}</p>
-    </div>
+<!-- Nutrition Section -->
+<div class="nutrition-container">
+  <div class="nutrition-info">
+    <span>kcal: {{ modifiedRecipe?.calories }}</span>
+    <span>protein: {{ modifiedRecipe?.protein }} g</span>
+    <span>fat: {{ modifiedRecipe?.fat }} g</span>
+    <span>carbs: {{ modifiedRecipe?.carbohydrate }} g</span>
+  </div>
+</div>
 
-    <!-- Image Section -->
-    <div class="recipe-image-container">
-      <img
-        *ngIf="selectedRecipe.photoUrl"
-        [src]="selectedRecipe.photoUrl"
-        [alt]="selectedRecipe.name"
-        class="recipe-image"
-      />
-    </div>
-
-    <!-- Nutrition Section -->
-    <div class="nutrition-container">
-      <h2>Nutrition Information</h2>
-      <ul>
-        <li><strong>Calories:</strong> {{ selectedRecipe.calories }} kcal</li>
-        <li><strong>Protein:</strong> {{ selectedRecipe.protein }} g</li>
-        <li><strong>Fat:</strong> {{ selectedRecipe.fat }} g</li>
-        <li><strong>Carbohydrates:</strong> {{ selectedRecipe.carbohydrate }} g</li>
-      </ul>
-    </div>
-
-    <!-- Ingredients Section -->
-    <div class="ingredients-container">
-      <h2>Ingredients</h2>
-      <ul *ngIf="selectedRecipe.baseRecipe?.contains?.length; else noIngredients">
-        <li *ngFor="let ingredient of selectedRecipe.baseRecipe?.contains">
-          {{ ingredient.amount }} {{ ingredient.measure }} {{ ingredient.ingredient?.name || 'Unknown ingredient' }}
-        </li>
-      </ul>
-      <ng-template #noIngredients>
-        <p>No ingredients available.</p>
-      </ng-template>
-    </div>
+<!-- Ingredients and Steps Section -->
+<div class="details-section">
+  <div class="ingredients-container">
+    <h2>Ingredients</h2>
+    <ul>
+      <li *ngFor="let ingredient of modifiedRecipe?.baseRecipe?.contains">
+        {{ ingredient.amount * (Number(ingredient.measure)) }} grams of {{ ingredient.ingredient.name }}
+      </li>
+    </ul>
   </div>
 
-  <!-- Display Recipe List -->
-  <div *ngIf="!selectedRecipe && joinedRecipes.length > 0; else noRecipes">
-    <div *ngFor="let recipe of joinedRecipes" class="recipe-item" (click)="selectRecipe(recipe)">
-      <!-- Header Section -->
-      <div class="recipe-header">
-        <h1 class="recipe-title">{{ recipe.name }}</h1>
-        <p class="recipe-description">{{ recipe.description }}</p>
-      </div>
-
-      <!-- Image Section -->
-      <div class="recipe-image-container">
-        <img
-          *ngIf="recipe.photoUrl"
-          [src]="recipe.photoUrl"
-          [alt]="recipe.name"
-          class="recipe-image"
-        />
-      </div>
-    </div>
+  <!-- Steps -->
+  <div class="steps-container">
+    <h2>Steps</h2>
+    <p>{{ modifiedRecipe?.steps }}</p>
   </div>
+</div>
 
-  <!-- No Recipes Template -->
-  <ng-template #noRecipes>
-    <p>No recipes available.</p>
-  </ng-template>
+
+<div class="explore-container">
+  <button type="button" class="explore-button" (click)="goBack()">
+    Explore More
+  </button>
 </div>
