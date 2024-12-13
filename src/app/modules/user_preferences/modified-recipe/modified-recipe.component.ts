@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { GeneralRecipeDetails } from '../../generalrecipe/model/general-recipe-details';
 import { UserPreferencesService } from '../services/user-preferences.service';
@@ -78,24 +77,21 @@ export class ModifiedRecipeComponent implements OnInit {
       return;
     }
 
-    console.log(`Attempting to remove recipe with ID ${recipeId} for user ID ${this.userId}...`);
+    console.log('Attempting to remove recipe with ID ${recipeId} for user ID ${this.userId}...');
 
     this.userPreferencesService.deleteModifiedRecipe(this.userId!, recipeId).subscribe({
       next: () => {
-        console.log(`Recipe with ID ${recipeId} removed successfully.`);
+        console.log('Recipe with ID ${recipeId} removed successfully.');
         // Update the local joinedRecipes array
         this.modifiedRecipes = this.modifiedRecipes.filter(
           (recipe) => recipe.baseRecipe.recipeId !== recipeId
         );
-        alert(`The recipe has been successfully removed from your favorites.`);
+        alert('The recipe has been successfully removed from your favorites.');
       },
       error: (err) => {
-        console.error(`Error removing recipe with ID ${recipeId}:`, err);
-        alert(`Failed to remove the recipe. Please try again later.`);
+        console.error('Error removing recipe with ID ${recipeId}:, err');
+        alert('Failed to remove the recipe. Please try again later.');
       },
     });
   }
 }
-
-
-

@@ -46,7 +46,8 @@ import { SearchBarComponent } from './core/components/searchresult/search-bar/se
     UserFavDietsComponent,
     SettingsComponent,
     SubstitutesComponent,
-    ModifiedRecipeComponent
+    ModifiedRecipeComponent,
+    ModifiedViewComponent
   ],
   imports: [
     BrowserModule,

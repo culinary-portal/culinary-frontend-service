@@ -8,3 +8,5 @@ export interface BaseRecipe {
   generalRecipeId: number;
   contains: Contains[];
 }
+
+
