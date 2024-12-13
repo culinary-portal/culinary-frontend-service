@@ -28,6 +28,8 @@ export class SubstitutesComponent implements OnInit {
   error: string | null = null;
   selectedSubstitutes: { [ingredientId: number]: BigModel } = {}; // Updated to track chosen substitutes as single entries
   isSaving = false;
+
+
   constructor(
     private route: ActivatedRoute,
     protected substitutesService: SubstitutesService,
@@ -205,7 +207,7 @@ export class SubstitutesComponent implements OnInit {
         this.isSaving = false; // Reset the flag after failure
       },
     });
-
+    this.router.navigate(['/my-modifications'])
   }
 }
 

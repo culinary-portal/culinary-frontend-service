@@ -188,31 +188,6 @@ export class RecipeComponent implements OnInit {
   }
 
 
-/*  hasSubstitute(ingredientId: number): Observable<boolean> {
-    return this.findSubstitute(ingredientId);
-  }
-
-  findSubstitute(ingredientId: number): Observable<boolean> {
-    return this.substitutesService.getSubstitutesForIngredient(ingredientId).pipe(
-      map((result: any) => {
-        return Array.isArray(result) && result.length > 0; // Check if substitutes exist
-      })
-    );
-  }*/
-
-  hasSubstitute(ingredientId: number): Observable<boolean> {
-    return this.findSubstitute(ingredientId);
-  }
-
-  findSubstitute(ingredientId: number): Observable<boolean> {
-    return this.substitutesService.getSubstitutesForIngredient(ingredientId).pipe(
-      map((result: any) => Array.isArray(result) && result.length == 0), // Check if substitutes exist
-      catchError(() => of(false)) // Handle errors and return false if something goes wrong
-    );
-  }
-
-
-
   protected readonly Number = Number;
 }
 

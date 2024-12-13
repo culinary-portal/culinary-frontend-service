@@ -26,6 +26,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import { SubstitutesComponent } from './modules/substitute/components/substitutes/substitutes.component';
 import { ModifiedRecipeComponent } from './modules/user_preferences/modified-recipe/modified-recipe.component';
+import { ModifiedViewComponent } from './modules/modified-view/modified-view.component';
 import { SearchBarComponent } from './core/components/searchresult/search-bar/search-bar.component';
 
 @NgModule({
