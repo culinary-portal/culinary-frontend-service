@@ -18,6 +18,7 @@ import {forkJoin} from "rxjs";
 })
 export class GeneralRecipeListComponent implements OnInit {
   generalRecipes: GeneralRecipeDetails[] = [];
+  filteredRecipes: GeneralRecipeDetails[] = [];
   totalElements = 0;
   pageSize = 10;
   currentPage = 0;
@@ -92,6 +93,16 @@ export class GeneralRecipeListComponent implements OnInit {
       });
   }
 
+  filterRecipes(searchTerm: string) {
+    if (!searchTerm) {
+      this.filteredRecipes = [...this.generalRecipes]; // Show all recipes when search term is empty
+    } else {
+      this.filteredRecipes = this.generalRecipes.filter(recipe =>
+        recipe.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+  }
+
   fetchRecipes(): void {
     this.isLoading = true;
     const filters = {
@@ -106,6 +117,7 @@ export class GeneralRecipeListComponent implements OnInit {
     this.generalRecipeService.getGeneralRecipes(filters).subscribe({
       next: (data) => {
         this.generalRecipes = data;
+        this.filteredRecipes = data;
         this.totalElements = data.length;
         this.isLoading = false;
       },
@@ -140,22 +152,22 @@ export class GeneralRecipeListComponent implements OnInit {
     const compare = (a: any, b: any) => criteria.endsWith('Increase') ? a - b : b - a;
     switch (criteria) {
       case 'caloriesIncrease':
-        this.generalRecipes.sort((a, b) => a.calories - b.calories);
+        this.filteredRecipes.sort((a, b) => a.calories - b.calories);
         break;
       case 'caloriesDecrease':
-        this.generalRecipes.sort((a, b) => b.calories - a.calories);
+        this.filteredRecipes.sort((a, b) => b.calories - a.calories);
         break;
       case 'proteinIncrease':
-        this.generalRecipes.sort((a, b) => a.protein - b.protein);
+        this.filteredRecipes.sort((a, b) => a.protein - b.protein);
         break;
       case 'proteinDecrease':
-        this.generalRecipes.sort((a, b) => b.protein - a.protein);
+        this.filteredRecipes.sort((a, b) => b.protein - a.protein);
         break;
       case 'rankingIncrease':
-        this.generalRecipes.sort((a, b) => a.rating - b.rating);
+        this.filteredRecipes.sort((a, b) => a.rating - b.rating);
         break;
       case 'rankingDecrease':
-        this.generalRecipes.sort((a, b) => b.rating - a.rating);
+        this.filteredRecipes.sort((a, b) => b.rating - a.rating);
         break;
     }
   }
@@ -210,6 +222,4 @@ export class GeneralRecipeListComponent implements OnInit {
       });
     }
   }
-
-
 }

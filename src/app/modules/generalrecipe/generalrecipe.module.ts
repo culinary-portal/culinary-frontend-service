@@ -5,6 +5,7 @@ import {GeneralRecipeListComponent} from "./components/general-recipe-list.compo
 import {SharedModule} from "../../shared/shared.module";
 import {FormsModule} from "@angular/forms";
 import {MatPaginatorModule} from "@angular/material/paginator";
+import {AppModule} from "../../app.module";
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import {MatPaginatorModule} from "@angular/material/paginator";
     CommonModule,
     SharedModule,
     FormsModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    AppModule
   ],
   providers: [
     GeneralRecipeService
