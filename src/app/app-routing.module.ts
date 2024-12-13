@@ -4,7 +4,6 @@ import {HomeComponent} from './core/components/home/home.component';
 import {LoginComponent} from './core/components/login/login.component';
 import {RegisterComponent} from './core/components/register/register.component';
 import {Page404Component} from './core/components/page404/page404.component';
-import {SearchresultComponent} from './core/components/searchresult/searchresult.component';
 import {TimeOfTheDayComponent} from "./core/components/time-of-the-day/time-of-the-day.component";
 import {GeneralRecipeListComponent} from "./modules/generalrecipe/components/general-recipe-list.component";
 import {RecipeComponent} from "./modules/recipe/components/recipe.component";
@@ -28,7 +27,6 @@ const routes: Routes = [
     path: 'general-recipes',
     loadChildren: () => import('./modules/generalrecipe/generalrecipe.module').then(m => m.GeneralRecipeModule)
   },
-  { path: 'products', component: SearchresultComponent},
   { path: 'recipes/:id', component: RecipeComponent },
   { path: 'profile', component: ProfileComponent},
   { path: 'favorite-recipes', component: UserFavRecipesComponent },
