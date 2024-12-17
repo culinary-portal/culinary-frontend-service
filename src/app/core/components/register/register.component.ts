@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {AuthService} from 'src/app/shared/services/auth/auth.service';
-import {AlertService} from "../../services/alert.service";
 
 @Component({
   selector: 'app-register',
@@ -16,7 +15,6 @@ export class RegisterComponent {
     private formBuilder: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private alertService: AlertService
   ) {
     this.registerForm = this.formBuilder.group({
       username: ['', [Validators.required, Validators.minLength(2)]],
@@ -42,15 +40,15 @@ export class RegisterComponent {
     const {username, email, password} = this.registerForm.value;
     this.authService.register({ username, email, password}).subscribe({
       next: () => {
-        this.alertService.info('Registration successful!');
+        alert('Registration successful!');
         this.router.navigate(['/login']);
       },
       error: (err) => {
         console.error('Registration failed', err);
         if (err.status === 500 && err.error?.message === 'User already exists!') {
-          this.alertService.error('Registration failed: User already exists!');
+          alert('Registration failed: User already exists!');
         } else {
-          this.alertService.error('Registration failed. Please try again later.');
+          alert('Registration failed. Please try again later.');
         }
       }
     });

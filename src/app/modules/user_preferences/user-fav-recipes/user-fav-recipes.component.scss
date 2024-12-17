@@ -1,0 +1,120 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #fce9d1;
+  margin: 0;
+  color: #333;
+}
+
+.recipe-container {
+  max-width: 10000px;
+  margin: 0 auto;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  background-color: #e89a50;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.recipe-container h1 {
+  font-size: 32px; /* Make the text larger */
+  font-weight: bold; /* Add more weight */
+  color: #ffffff; /* White text to contrast with orange background */
+  text-align: center; /* Center the text */
+  margin-bottom: 20px; /* Add spacing below */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); /* Add a subtle shadow */
+}
+
+.profile-page {
+  display: flex;
+  flex-direction: column;
+}
+
+.content-container {
+  display: flex;
+  padding: 30px;
+}
+
+.favorites-section {
+  flex: 3;
+  padding: 20px;
+}
+
+.favorites-section h2 {
+  font-size: 32px;
+  margin-bottom: 20px;
+  text-align: center; /* Center the heading text */
+}
+
+.favorites-section .no-recipes-message {
+  font-size: 16px;
+  color: #888;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.favorites-section .recipes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
+}
+
+.favorites-section .recipe-card {
+  background-color: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-align: center; /* Center-align text inside each card */
+  width: fit-content;
+}
+
+.favorites-section .recipe-card .recipe-image {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+
+.favorites-section .recipe-card h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.favorites-section .recipe-card p {
+  margin: 5px 0;
+  font-size: 14px;
+  color: #666;
+}
+
+
+.remove-btn {
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 15px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.remove-btn:hover {
+  background-color: rgba(181, 51, 5, 0.45);
+}
+
+.recipe-link {
+  color: rgb(3, 53, 40);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.recipe-link:hover {
+  text-decoration: underline;
+}
+
+.recipe-link:active {
+  color: #065f46;
+}

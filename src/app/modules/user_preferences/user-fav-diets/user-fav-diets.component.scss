@@ -1,0 +1,191 @@
+/*
+!*.preferences-container {
+  max-width: 500px;
+  margin: 20px auto;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+.diet-item {
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+}
+
+.diet-item label {
+  font-size: 1rem;
+  color: #333;
+  cursor: pointer;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}*!
+.preferences-container {
+  max-width: 600px;
+  margin: 20px auto;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+h1 {
+  color: #333;
+}
+
+.diet-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 15px auto;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  width: 200px;
+  text-align: center;
+}
+
+.diet-item.selected {
+  background-color: #e89a50;
+  color: white;
+  transform: scale(1.05);
+}
+
+.diet-icon {
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+label {
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.actions {
+  margin-top: 20px;
+}
+
+.reset-button {
+  padding: 10px 20px;
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.reset-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.reset-button:hover:not(:disabled) {
+  background-color: #c9302c;
+}
+
+
+
+*/
+
+
+
+.preferences-container {
+  max-width: 600px;
+  margin: 20px auto;
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+  background-color: #e89a50;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  font-size: 32px; /* Make the text larger */
+  font-weight: bold; /* Add more weight */
+  color: #ffffff; /* White text to contrast with orange background */
+  text-align: center; /* Center the text */
+  margin-bottom: 20px; /* Add spacing below */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4); /* Add a subtle shadow */
+}
+
+.diet-list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+  padding: 0 20px;
+}
+
+.diet-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 10px;
+  background-color: #fff;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s, transform 0.2s;
+  width: 100%;
+}
+
+.diet-item:hover {
+  background-color: #fff8e1;
+  border-color: #ffa726;
+  transform: translateY(-2px);
+}
+
+.diet-item.selected {
+  background-color: #ffe0b2;
+  border-color: #ff9800;
+  transform: scale(1.02);
+}
+
+.diet-icon {
+  font-size: 24px;
+  color: #ff9800;
+}
+
+.diet-item.selected .diet-icon {
+  color: #d35400;
+}
+
+.diet-name {
+  font-size: 18px;
+  color: #333;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.actions {
+  margin-top: 20px;
+}
+
+.reset-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.reset-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.reset-button:hover:not(:disabled) {
+  background-color: #c9302c;
+}

@@ -2,8 +2,14 @@ import {Component, OnInit} from '@angular/core';
 import {GeneralRecipeService} from '../services/general-recipe.service';
 import {GeneralRecipeDetails} from '../model/general-recipe-details';
 import {loadJsonConfig} from '../../../shared/helper/loadConfigJson';
-import {ActivatedRoute, Router} from "@angular/router";
-
+import {PageEvent} from "@angular/material/paginator";
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from 'src/app/shared/services/auth/auth.service';
+import {HttpClient} from "@angular/common/http";
+import {environment} from "../../../../environments/environment";
+import {Diet} from "../../diet/model/diet";
+import {UserPreferencesService} from "../../user_preferences/services/user-preferences.service";
+import {forkJoin} from "rxjs";
 
 @Component({
   selector: 'app-general-recipe-list',
@@ -12,26 +18,50 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class GeneralRecipeListComponent implements OnInit {
   generalRecipes: GeneralRecipeDetails[] = [];
+  filteredRecipes: GeneralRecipeDetails[] = [];
+  totalElements = 0;
+  pageSize = 10;
+  currentPage = 0;
+
   isLoading = true;
+  isLoggedIn = false;
   error: string | null = null;
   minCalories: number | null = null;
   maxCalories: number | null = null;
   selectedDiets: string[] = [];
-  configDietTypes: string[] = [];
+  configDietTypes: Diet[] = [];
   configMealTypes: string[] = [];
   selectedMealType: string | null = null;
+  favouriteDiets: Diet[] = [];
+
+  userId: number | undefined; // Assuming userId is available after login
 
   constructor(
     private generalRecipeService: GeneralRecipeService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private authService: AuthService,
+    private http: HttpClient,
+    private userPreferencesService: UserPreferencesService
   ) {}
 
   ngOnInit(): void {
-    this.loadDietConfig();
+
+    this.isLoggedIn = this.authService.isLoggedIn(); // Check if the user is logged in
+    if (this.isLoggedIn) {
+      const userDetails = this.authService.getUserDetails(); // Retrieve user details
+      if (userDetails && userDetails.id) {
+        this.userId = userDetails.id; // Set userId from user details
+      } else {
+        console.error('User details are missing or invalid.');
+      }
+    }
+    this.loadAllData();
+
+    this.loadMealConfig();
     this.route.paramMap.subscribe(params => {
       this.selectedMealType = params.get('mealType');
-      this.fetchRecipes(); // Fetch recipes based on the selected meal type
+      this.fetchRecipes();
     });
     this.loadMealConfig();
   }
@@ -41,13 +71,15 @@ export class GeneralRecipeListComponent implements OnInit {
   }
 
   loadDietConfig(): void {
-    loadJsonConfig('diet-config.json')
-      .then((config) => {
-        this.configDietTypes = config.dietTypes;
-      })
-      .catch(() => {
-        this.error = 'Failed to load diet configuration';
-      });
+    this.userPreferencesService.getAllDiets().subscribe(
+      (data: Diet[]) => {
+        this.configDietTypes = data;
+      },
+      (error: any) => {
+        console.error('Error fetching available diets:', error);
+        alert('Failed to load available diets. Please try again later.');
+      }
+    );
   }
 
 
@@ -57,8 +89,18 @@ export class GeneralRecipeListComponent implements OnInit {
         this.configMealTypes = config.configMealTypes;
       })
       .catch(() => {
-        this.error = 'Failed to load diet configuration';
+        this.error = 'Failed to load meal configuration';
       });
+  }
+
+  filterRecipes(searchTerm: string) {
+    if (!searchTerm) {
+      this.filteredRecipes = [...this.generalRecipes]; // Show all recipes when search term is empty
+    } else {
+      this.filteredRecipes = this.generalRecipes.filter(recipe =>
+        recipe.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
   }
 
   fetchRecipes(): void {
@@ -67,12 +109,16 @@ export class GeneralRecipeListComponent implements OnInit {
       diets: this.selectedDiets,
       minCalories: this.minCalories,
       maxCalories: this.maxCalories,
-      mealType: this.selectedMealType
+      mealType: this.selectedMealType,
+      page: this.currentPage,
+      size: this.pageSize
     };
 
     this.generalRecipeService.getGeneralRecipes(filters).subscribe({
-      next: (recipes: GeneralRecipeDetails[]) => {
-        this.generalRecipes = recipes;
+      next: (data) => {
+        this.generalRecipes = data;
+        this.filteredRecipes = data;
+        this.totalElements = data.length;
         this.isLoading = false;
       },
       error: (err: { message: string | null }) => {
@@ -81,6 +127,12 @@ export class GeneralRecipeListComponent implements OnInit {
       }
     });
   }
+
+  onPageChange(event: PageEvent): void {
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+  }
+
 
   onDietFilterChange(event: any): void {
     const diet = event.target.value;
@@ -97,25 +149,77 @@ export class GeneralRecipeListComponent implements OnInit {
   }
 
   sortRecipes(criteria: string): void {
+    const compare = (a: any, b: any) => criteria.endsWith('Increase') ? a - b : b - a;
     switch (criteria) {
       case 'caloriesIncrease':
-        this.generalRecipes.sort((a, b) => a.calories - b.calories);
+        this.filteredRecipes.sort((a, b) => a.calories - b.calories);
         break;
       case 'caloriesDecrease':
-        this.generalRecipes.sort((a, b) => b.calories - a.calories);
+        this.filteredRecipes.sort((a, b) => b.calories - a.calories);
         break;
       case 'proteinIncrease':
-        this.generalRecipes.sort((a, b) => a.protein - b.protein);
+        this.filteredRecipes.sort((a, b) => a.protein - b.protein);
         break;
       case 'proteinDecrease':
-        this.generalRecipes.sort((a, b) => b.protein - a.protein);
+        this.filteredRecipes.sort((a, b) => b.protein - a.protein);
         break;
       case 'rankingIncrease':
-        this.generalRecipes.sort((a, b) => a.rating - b.rating);
+        this.filteredRecipes.sort((a, b) => a.rating - b.rating);
         break;
       case 'rankingDecrease':
-        this.generalRecipes.sort((a, b) => b.rating - a.rating);
+        this.filteredRecipes.sort((a, b) => b.rating - a.rating);
         break;
+    }
+  }
+
+  viewRecipeDetails(id: number): void {
+    this.router.navigate(['/recipes', id]);
+  }
+
+
+  loadAllData(): void {
+    const diets$ = this.http.get<Diet[]>(`${environment.apiUrl}/api/diet-types`);
+
+    // Only fetch favourite diets if the user is logged in and userId is defined
+    const favouriteDiets$ = this.isLoggedIn && this.userId
+      ? this.http.get<Diet[]>(`${environment.apiUrl}/api/user/${this.userId}/favorite-diets`)
+      : null;
+
+    if (favouriteDiets$) {
+      // Handle logged-in users
+      forkJoin([diets$, favouriteDiets$]).subscribe({
+        next: ([diets, favouriteDiets]) => {
+          this.configDietTypes = diets; // Populate available diets
+          this.favouriteDiets = favouriteDiets; // Populate favorite diets
+
+          // Set selected diets to favourite diets by default
+          this.selectedDiets = this.favouriteDiets.map((diet) => diet.dietType);
+
+          console.log('Diets loaded:', this.configDietTypes);
+          console.log('Favourite diets loaded:', this.favouriteDiets);
+          console.log('Selected diets (default):', this.selectedDiets);
+
+          // Apply default filter
+          this.fetchRecipes();
+        },
+        error: (err) => {
+          console.error('Error loading diets or favorites:', err);
+          alert('Failed to load diets. Please try again later.');
+        },
+      });
+    } else {
+      // Handle not-logged-in users
+      diets$.subscribe({
+        next: (diets) => {
+          this.configDietTypes = diets; // Populate available diets
+          this.selectedDiets = []; // No default selection
+          console.log('Diets loaded for guest user:', this.configDietTypes);
+        },
+        error: (err) => {
+          console.error('Error loading diets:', err);
+          alert('Failed to load diets. Please try again later.');
+        },
+      });
     }
   }
 }
