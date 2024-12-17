@@ -10,7 +10,7 @@
       <ul>
         <li *ngFor="let ingredient of generalRecipe?.baseRecipe?.contains" class="ingredient-item">
           <span>
-            {{ ingredient.amount * (Number(ingredient.measure))  }} g of <strong>{{ ingredient.ingredient.name }}</strong>
+            {{ ingredient.amount * (Number(ingredient.measure))  }} grams of <strong>{{ ingredient.ingredient.name }}</strong>
           </span>
           <button
             *ngIf="substitutesMap[ingredient.ingredient.ingredientId]?.length"
