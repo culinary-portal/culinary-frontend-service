@@ -2,7 +2,7 @@ name: Deploy to GAE with GAR
 
 on:
   push:
-    branches: [ "development" ]
+    branches: [ "ingredient-module" ]
   pull_request:
     branches: [ "main" ]
 
